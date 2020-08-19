@@ -5,6 +5,6 @@ app.get('/', (req, res) => {
      res.send("test!")
 })
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
      console.log("connected to http://localhost:3000")
 })
