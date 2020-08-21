@@ -18,7 +18,8 @@
   "homepage": "https://github.com/wustve/stuffy-site#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "pg": "^8.3.2"
   },
   "engines": {
     "node": "12.18.3"
