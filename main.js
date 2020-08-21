@@ -1,9 +1,13 @@
 const express = require("express")
 const app = express()
 const ejs = require('ejs')
+const { DatabaseController } = require("./database")
+
+require("dotenv").config()
+
+let a = new DatabaseController(process.env.DATABASE_URL);
 
 app.set('view engine', 'ejs')
-require("dotenv").config()
 
 app.get('/', (req, res) => {
      //res.send(ejs.render('<%= fish%>', {fish: 'shark'}))
