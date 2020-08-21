@@ -12,29 +12,28 @@ class DatabaseController {
      }
 
      async create() {
-          const client = this.client
-          await client.connect()
+          await this.client.connect()
           try {
-               await client.query("CREATE TABLE Stuffies (name varchar(255), animal_type varchar(255), image varchar(255), owner varchar(255), name_origin text, origin text, other_notes text);")
+               await this.client.query("CREATE TABLE Stuffies (name varchar(255), animal_type varchar(255), image varchar(255), owner varchar(255), name_origin text, origin text, other_notes text);")
           }
           catch(err){
                console.log(err)
           }
           finally {
-               client.end()
+               this.client.end()
           }
      }
 
      async select(table, values) {
-          await client.connect()
+          await this.client.connect()
           try {
-               client.query(text, values)
+               this.client.query(text, values)
           }
           catch(err){
                console.log(err)
           }
           finally {
-               client.release()
+               this.client.end()
           }
      }
 }
