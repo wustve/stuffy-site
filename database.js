@@ -46,6 +46,21 @@ class DatabaseController {
           }
           this.client.end()
      }
+
+     async command(queryText, values = null) {
+          await this.client.connect()
+          try {
+               const response = await this.client.query(queryText, values)
+               this.client.end()
+               return response
+          }
+          catch(err) {
+               console.log(err)
+          }
+          finally {
+               this.client.end()
+          }
+     }
 }
 
 exports.DatabaseController = DatabaseController

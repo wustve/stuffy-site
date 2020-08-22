@@ -1,9 +1,31 @@
 <!DOCTYPE html>
 <html>
      <head>
-          <title>Welcome to the greatest site on planet Earth!</title>
+          <title>Stuffy Site <%=name%></title>
+          <link rel = "stylesheet" type = "text/css" href = "article.css">
      </head>
      <body>
-          <p><%=content%></p>
+          <div class = "wrapper">
+               <h2><%=name%></h2>
+               <div class ="infoBox">
+                    <img src="<%=image%>" class = "thumbnail">
+                    <p>Animal Type: <%=animal_type%></p>
+                    <p>Owner: <%=owner%></p>
+               </div>
+               <div class = "paragraphs">
+                    <% if (name_origin !== null) {%>
+                         <h3>Name Origin</h3>
+                         <p><%=name_origin%></p>
+                    <% }%>
+                    <% if (origin !== null) {%>
+                         <h3>Origin</h3>
+                         <p><%=origin%></p>
+                    <% }%>
+                    <% if (other_notes !== null) {%>
+                         <h3>Other Notes</h3>
+                         <p>my owner is <%=other_notes%></p>
+                    <% }%>
+               </div>
+          </div>
      </body>
 </html>

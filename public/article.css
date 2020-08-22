@@ -1,0 +1,13 @@
+.infoBox {
+     width: 30%;
+}
+
+.wrapper {
+     width: 80%;
+}
+
+.thumbnail {
+     height: 40%;
+     width: 40%;
+     object-fit: contain;
+}
