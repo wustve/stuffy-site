@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+     <head>
+          <title>Welcome to the greatest site on planet Earth!</title>
+          <link rel = "stylesheet" type = "text/css" href = "homepage.css">
+     </head>
+     <body>
+          <div class = "header">
+               <h1>The Stuffy Site!</h1>
+          </div>
+          <div class = "menu">
+               <% for (let i = 0; i < stuffies.length; i++){%>
+                    <a class = "menuLinks" href = "/stuffies/<%=stuffies[i]%>"><%=stuffies[i]%></a><br>
+                <%}%>
+          </div>
+          <div id = "stuffyOfTheDayWrapper">
+               <div class = "stuffyOfTheDay">
+                    <h2>Steven's Stuffy of the Day!</h2>
+                    <h3>Wolfy</h3>
+                    <img class = "stuffyOfTheDayPic" src = "<%=imageSteven%>"> 
+               </div>
+               <div class = "stuffyOfTheDay">
+                    <h2>Monica's Stuffy of the Day!</h2>
+                    <h3>Happy Feet</h3>
+                    <img class = "stuffyOfTheDayPic" src = "<%=imageMonica%>"> 
+               </div>
+          </div>
+     </body>
+</html>
