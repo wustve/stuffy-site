@@ -1,0 +1,28 @@
+.header {
+     text-align: center;
+}
+.menu {
+     float: left;
+     width: 20%
+}
+
+.menuLinks {
+     color: turquoise;
+}
+
+#stuffyOfTheDayWrapper {
+     width: 80%;
+     float: left;
+
+}
+.stuffyOfTheDay {
+     height: 100%;
+     width: 40%;
+     display: inline-block;
+}
+
+.stuffyOfTheDayPic {
+     object-fit: cover;
+     height: 500px;
+     width: 500px;
+}
