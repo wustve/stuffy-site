@@ -32,7 +32,7 @@ app.get("/:stuffyName/:stuffyType", async function(req, res) {
           })
      }
      else {
-          res.render("error.ejs", {name : req.params.stuffyName, animal_type : req.params.stuffyType})
+          res.render("error.ejs")
      }
 })
 
