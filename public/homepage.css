@@ -1,5 +1,10 @@
 .header {
-     text-align: center;
+     text-align: center; 
+}
+.content{
+     margin-left:200px; /*width of menu*/
+     text-align: center; 
+     background-color: grey;
 }
 .menu {
      float: left;
@@ -11,9 +16,9 @@
 }
 
 #stuffyOfTheDayWrapper {
-     width: 80%;
-     float: left;
+     width : 80%;
 
+     margin: auto;
 }
 .stuffyOfTheDay {
      height: 100%;
@@ -22,7 +27,10 @@
 }
 
 .stuffyOfTheDayPic {
+     text-align: center;
      object-fit: cover;
      height: 500px;
      width: 500px;
+     display:inline-block;
+     
 }

@@ -1,0 +1,8 @@
+<link rel = "stylesheet" type = "text/css" href = "menu.css">
+<div class = 'menu'>
+    <% for (let i = 0; i < options.length; i++){%>
+        <% para = options[i][0].split(' ').join('_')%>
+        <% para = para + '/'+options[i][1]%>
+        <a href = <%=para%>><%=options[i][0]+' ('+ options[i][1] +')'%></a>
+    <%}%>
+</div>
