@@ -28,23 +28,16 @@ class DatabaseController {
      }
 
      async select(name = null) {
-          var count = 0
           await this.client.connect()
-          while (count < 5){
-               try {
-                    const response = await this.client.query('Select * FROM stuffies')
-                    await this.client.end()
-                    this.client.end()
-                    return response
-               }
-               catch(err){
-                    console.log(err)
-                    await this.client.connect()
-                    count++
-                    continue
-               }
+          try {
+               const response = await this.client.query('Select * FROM stuffies')
+               await this.client.end()
+               return response
           }
-          this.client.end()
+          catch(err){
+               console.log(err)
+               return false
+          }
      }
 }
 
