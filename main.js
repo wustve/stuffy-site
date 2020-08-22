@@ -6,7 +6,10 @@ const { DatabaseController } = require("./database")
 require("dotenv").config()
 
 let database = new DatabaseController(process.env.DATABASE_URL);
-
+var result = database.select().then((res)=>{return res})
+console.log(result)
+//database.create()
+//database.client.commit()
 app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'))
