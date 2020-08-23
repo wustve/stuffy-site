@@ -3,15 +3,12 @@
 }
 .content{
      margin-left:10%; /*width of menu*/
-     margin-top: 5%;
+     margin-top: 10%;
      text-align: center;
      width: 90%;
      background-color: grey;
-     position: fixed;
-}
-
-.menuLinks {
-     color: turquoise;
+     padding :0;
+     overflow-y: auto;
 }
 
 #stuffyOfTheDayWrapper {
@@ -30,6 +27,5 @@
      object-fit: cover;
      height: 500px;
      width: 500px;
-     display:inline-block;
-     
+     display:inline-block;     
 }

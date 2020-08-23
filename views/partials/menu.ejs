@@ -2,7 +2,7 @@
 <div class = 'menu'>
     <a href = '/'>Home</a>
     <% for (let i = 0; i < options.length; i++){%>
-        <% para = '../' + options[i].name.split(' ').join('_')%>
+        <% para = '/' + options[i].name.split(' ').join('_')%>
         <% para = para + '/'+options[i].animal_type%>
         <a href = <%=para%>><%=options[i].name+' ('+ options[i].animal_type +')'%></a>
     <%}%>

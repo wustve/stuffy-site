@@ -3,7 +3,7 @@
     background-color: rgba(23, 54, 230, 0.993) ;
     color: white;
     text-decoration: none;
-    padding: 12px;
+    padding: 1vw;
 }
 .menu{
     width: 10%;
@@ -14,5 +14,6 @@
     top: 0;
     left:0;
     overflow-y: auto;
+    padding : 0;
 }
 
