@@ -3,8 +3,11 @@
 }
 .content{
      margin-left:10%; /*width of menu*/
-     text-align: center; 
+     margin-top: 5%;
+     text-align: center;
+     width: 90%;
      background-color: grey;
+     position: fixed;
 }
 
 .menuLinks {

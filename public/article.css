@@ -3,14 +3,19 @@
 }
 
 .wrapper {
-     width: 70%;
-     position: fixed;
-     left: 20%;
-     margin: 5%;
+     width: 86%;
+     position: absolute;
+     left: 10%;
+     margin-left: 5%;
+     margin-top: 10%;
 }
 
 .thumbnail {
      height: 40%;
      width: 40%;
      object-fit: contain;
+}
+
+body {
+     background-color: lightblue;
 }
