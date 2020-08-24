@@ -11,7 +11,10 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', async (req, res) => {
-     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type FROM stuffies ORDER BY name ASC;')
+     await new DatabaseController(process.env.DATABASE_URL).create()
+
+
+     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name ASC;')
      const anchorDateSteven = DateTime.fromISO('2020-08-22',{zone : 'America/Toronto'})
      const anchorDateMonica = DateTime.fromISO('2020-08-12',{zone : 'America/Toronto'})
      var currentDate = new Date()
@@ -44,7 +47,8 @@ app.get("/:stuffyName/:stuffyType", async function(req, res) {
      console.log(req.params.stuffyName)
      console.log(req.params.stuffyType)
      menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type FROM stuffies ORDER BY name ASC;')
-     dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName, req.params.stuffyType])
+     dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g,' '), req.params.stuffyType])
+     
      console.log(dbResult)
      if (dbResult.rowCount > 0) {
           res.render("article.ejs", {
