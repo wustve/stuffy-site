@@ -13,17 +13,25 @@ app.get('/', async (req, res) => {
      //res.send(ejs.render('<%= fish%>', {fish: 'shark'}))
      //res.render('index.ejs', {fish : 'tuna', image: 'https://media.discordapp.net/attachments/515341359771680788/746389232192585788/20200821_112356.jpg?width=509&height=679', options :[1,2,3]})
      //thing = await new DatabaseController(process.env.DATABASE_URL).create()
-     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type FROM stuffies ORDER BY name ASC;')
-     var stevenStuffies = await new DatabaseController(process.env.DATABASE_URL).command("Select name, animal_type, image FROM stuffies WHERE owner = $1 ORDER BY name;", ["Steven"])
-     var monicaStuffies = await new DatabaseController(process.env.DATABASE_URL).command("Select name, animal_type, image FROM stuffies WHERE owner = $1 ORDER BY name;", ["Monica"])
+     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name ASC;')
+     var stevenStuffies = []
+     var monicaStuffies = []
+     for (num in menuResult.rows) {
+          if (menuResult.rows[num].owner === "Monica") {
+               monicaStuffies.push(menuResult.rows[num])
+          }
+          else if (menuResult.rows[num].owner === "Steven") {
+               stevenStuffies.push(menuResult.rows[num])
+          }
+     }
      const anchorDateSteven = new Date(2020, 7, 22)
      const anchorDateMonica = new Date(2020, 7, 12)
      var currentDate = new Date()
      var currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
-     var dateDifferenceSteven = ((currentDate.getTime() - anchorDateSteven.getTime())/(1000*60*60*24)) % stevenStuffies.rowCount
-     var dateDifferenceMonica = ((currentDate.getTime() - anchorDateMonica.getTime())/(1000*60*60*24)) % monicaStuffies.rowCount
-     var stevenStuffyOfTheDay = stevenStuffies.rows[dateDifferenceSteven]
-     var monicaStuffyOfTheDay = monicaStuffies.rows[dateDifferenceMonica]
+     var dateDifferenceSteven = ((currentDate.getTime() - anchorDateSteven.getTime())/(1000*60*60*24)) % stevenStuffies.length
+     var dateDifferenceMonica = ((currentDate.getTime() - anchorDateMonica.getTime())/(1000*60*60*24)) % monicaStuffies.length
+     var stevenStuffyOfTheDay = stevenStuffies[dateDifferenceSteven]
+     var monicaStuffyOfTheDay = monicaStuffies[dateDifferenceMonica]
      res.render("homepage.ejs", {
           nameSteven: stevenStuffyOfTheDay.name,
           nameMonica: monicaStuffyOfTheDay.name,
