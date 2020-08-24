@@ -12,7 +12,6 @@
 
 #stuffyOfTheDayWrapper {
      width : 80%;
-
      margin: auto;
 }
 .stuffyOfTheDay {
@@ -23,7 +22,7 @@
 
 .stuffyOfTheDayPic {
      text-align: center;
-     object-fit: cover;
+     object-fit: contain;
      height: 25vw;
      width: 25vw;
      display:inline-block;     

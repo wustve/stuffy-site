@@ -2,6 +2,7 @@ const express = require("express")
 const app = express()
 const ejs = require('ejs')
 const { DatabaseController } = require("./database")
+var {DateTime} = require('luxon')
 
 require("dotenv").config()
 
@@ -16,12 +17,16 @@ app.get('/', async (req, res) => {
      var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type FROM stuffies ORDER BY name ASC;')
      var stevenStuffies = await new DatabaseController(process.env.DATABASE_URL).command("Select name, animal_type, image FROM stuffies WHERE owner = $1 ORDER BY name;", ["Steven"])
      var monicaStuffies = await new DatabaseController(process.env.DATABASE_URL).command("Select name, animal_type, image FROM stuffies WHERE owner = $1 ORDER BY name;", ["Monica"])
-     const anchorDateSteven = new Date(2020, 7, 22)
-     const anchorDateMonica = new Date(2020, 7, 12)
+     const anchorDateSteven = DateTime.fromISO('2020-08-22',{zone : 'America/Toronto'})
+     const anchorDateMonica = DateTime.fromISO('2020-08-12',{zone : 'America/Toronto'})
+     console.log(anchorDateMonica)
      var currentDate = new Date()
-     var currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
-     var dateDifferenceSteven = ((currentDate.getTime() - anchorDateSteven.getTime())/(1000*60*60*24)) % stevenStuffies.rowCount
-     var dateDifferenceMonica = ((currentDate.getTime() - anchorDateMonica.getTime())/(1000*60*60*24)) % monicaStuffies.rowCount
+     console.log(currentDate)
+     //currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
+     //console.log(currentDate)
+     var dateDifferenceSteven = Math.floor((currentDate - anchorDateSteven)/(1000*60*60*24)) % stevenStuffies.rowCount
+     var dateDifferenceMonica = Math.floor((currentDate - anchorDateMonica)/(1000*60*60*24)) % monicaStuffies.rowCount
+     console.log(dateDifferenceSteven)
      var stevenStuffyOfTheDay = stevenStuffies.rows[dateDifferenceSteven]
      var monicaStuffyOfTheDay = monicaStuffies.rows[dateDifferenceMonica]
      res.render("homepage.ejs", {
