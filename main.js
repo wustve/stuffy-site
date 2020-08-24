@@ -11,9 +11,12 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', async (req, res) => {
+<<<<<<< HEAD
      await new DatabaseController(process.env.DATABASE_URL).create()
 
 
+=======
+>>>>>>> 7ba074193fdd2fcb2bf2865888303cb6515ef154
      var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name ASC;')
      const anchorDateSteven = DateTime.fromISO('2020-08-22',{zone : 'America/Toronto'})
      const anchorDateMonica = DateTime.fromISO('2020-08-12',{zone : 'America/Toronto'})
@@ -23,24 +26,28 @@ app.get('/', async (req, res) => {
      for (num in menuResult.rows) {
           if (menuResult.rows[num].owner === "Monica") {
                monicaStuffies.push(menuResult.rows[num])
-               console.log(await stevenStuffies[0])
           }
           else if (menuResult.rows[num].owner === "Steven") {
                stevenStuffies.push(menuResult.rows[num])
           }
      }
-     var dateDifferenceSteven = Math.floor((currentDate - anchorDateSteven)/(1000*60*60*24)) % stevenStuffies.length
-     var dateDifferenceMonica = Math.floor((currentDate - anchorDateMonica)/(1000*60*60*24)) % monicaStuffies.length
-     var stevenStuffyOfTheDay = stevenStuffies[dateDifferenceSteven]
-     var monicaStuffyOfTheDay = monicaStuffies[dateDifferenceMonica]
-     res.render("homepage.ejs", {
-          nameSteven: stevenStuffyOfTheDay.name,
-          nameMonica: monicaStuffyOfTheDay.name,
-          stuffies: [monicaStuffyOfTheDay.name, stevenStuffyOfTheDay.name], 
-          imageSteven: stevenStuffyOfTheDay.image, 
-          imageMonica: monicaStuffyOfTheDay.image, 
-          options: menuResult.rows
-     })
+     try {
+          var dateDifferenceSteven = Math.floor((currentDate - anchorDateSteven)/(1000*60*60*24)) % stevenStuffies.length
+          var dateDifferenceMonica = Math.floor((currentDate - anchorDateMonica)/(1000*60*60*24)) % monicaStuffies.length
+          var stevenStuffyOfTheDay = stevenStuffies[dateDifferenceSteven]
+          var monicaStuffyOfTheDay = monicaStuffies[dateDifferenceMonica]
+          res.render("homepage.ejs", {
+               nameSteven: stevenStuffyOfTheDay.name,
+               nameMonica: monicaStuffyOfTheDay.name,
+               stuffies: [monicaStuffyOfTheDay.name, stevenStuffyOfTheDay.name], 
+               imageSteven: stevenStuffyOfTheDay.image, 
+               imageMonica: monicaStuffyOfTheDay.image, 
+               options: menuResult.rows
+          })
+     }
+     catch(err) {
+          res.render("error.ejs")
+     }
 })
 
 app.get("/:stuffyName/:stuffyType", async function(req, res) {
