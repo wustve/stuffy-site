@@ -3,16 +3,13 @@
 }
 
 .wrapper {
-     width: 86%;
-     position: absolute;
-     left: 10%;
-     margin-left: 5%;
-     margin-top: 10%;
+     width: 90%;
+     margin-left: 10%;
 }
 
 .thumbnail {
-     height: 40%;
-     width: 40%;
+     height: 60%;
+     width: 60%;
      object-fit: contain;
 }
 

@@ -1,14 +1,17 @@
 .menu a{
     display: block;
-    background-color: rgba(23, 54, 230, 0.993) ;
+    background-color:rgb(32, 32, 32);
     color: white;
     text-decoration: none;
     padding: 1vw;
 }
+.menu a:hover{
+    background-color: rgb(56, 56, 56) ;
+}
 .menu{
     width: 10%;
     height: 100%;
-    background-color:rgba(23, 54, 230, 0.993);
+    background-color: rgb(32, 32, 32);
     position: fixed;
     z-index:1;
     top: 0;

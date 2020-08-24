@@ -11,8 +11,8 @@
                <h2><%=name%></h2>
                <div class ="infoBox">
                     <img src="<%=image%>" class = "thumbnail">
-                    <p>Animal Type: <%=animal_type%></p>
-                    <p>Owner: <%=owner%></p>
+                    <p><b>Animal Type:</b> <%=animal_type%></p>
+                    <p><b>Owner:</b> <%=owner%></p>
                </div>
                <div class = "paragraphs">
                     <% if (name_origin !== null) {%>
@@ -25,7 +25,7 @@
                     <% }%>
                     <% if (other_notes !== null) {%>
                          <h3>Other Notes</h3>
-                         <p>my owner is <%=other_notes%></p>
+                         <p><%=other_notes%></p>
                     <% }%>
                </div>
           </div>

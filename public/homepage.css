@@ -3,7 +3,6 @@
 }
 .content{
      margin-left:10%; /*width of menu*/
-     margin-top: 10%;
      text-align: center;
      width: 90%;
      background-color: grey;
@@ -25,7 +24,7 @@
 .stuffyOfTheDayPic {
      text-align: center;
      object-fit: cover;
-     height: 500px;
-     width: 500px;
+     height: 25vw;
+     width: 25vw;
      display:inline-block;     
 }
