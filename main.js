@@ -8,12 +8,30 @@ require("dotenv").config()
 app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'))
+
 app.get('/', async (req, res) => {
      //res.send(ejs.render('<%= fish%>', {fish: 'shark'}))
      //res.render('index.ejs', {fish : 'tuna', image: 'https://media.discordapp.net/attachments/515341359771680788/746389232192585788/20200821_112356.jpg?width=509&height=679', options :[1,2,3]})
      thing = await new DatabaseController(process.env.DATABASE_URL).create()
      menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type FROM stuffies ORDER BY name ASC;')
-     res.render("homepage.ejs", {stuffies: ["happyfeet", "wolfy"], imageSteven: "https://cdn.discordapp.com/attachments/515341359771680788/746501441832747019/IMG_20200821_184907.jpg", imageMonica: "https://cdn.discordapp.com/attachments/515341359771680788/746435637149696020/20200821_142806.jpg", options: menuResult.rows})
+     stevenStuffies = await new DatabaseController(process.env.DATABASE_URL).command("Select name, animal_type, image FROM stuffies WHERE owner = $1 ORDER BY name;", ["Steven"])
+     monicaStuffies = await new DatabaseController(process.env.DATABASE_URL).command("Select name, animal_type, image FROM stuffies WHERE owner = $1 ORDER BY name;", ["Monica"])
+     const anchorDateSteven = new Date(2020, 7, 22)
+     const anchorDateMonica = new Date(2020, 7, 12)
+     var currentDate = new Date()
+     currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
+     var dateDifferenceSteven = ((currentDate.getTime() - anchorDateSteven.getTime())/(1000*60*60*24)) % stevenStuffies.rowCount
+     var dateDifferenceMonica = ((currentDate.getTime() - anchorDateMonica.getTime())/(1000*60*60*24)) % monicaStuffies.rowCount
+     var stevenStuffyOfTheDay = stevenStuffies.rows[dateDifferenceSteven]
+     var monicaStuffyOfTheDay = monicaStuffies.rows[dateDifferenceMonica]
+     res.render("homepage.ejs", {
+          nameSteven: stevenStuffyOfTheDay.name,
+          nameMonica: monicaStuffyOfTheDay.name,
+          stuffies: [monicaStuffyOfTheDay.name, stevenStuffyOfTheDay.name], 
+          imageSteven: stevenStuffyOfTheDay.image, 
+          imageMonica: monicaStuffyOfTheDay.image, 
+          options: menuResult.rows
+     })
 })
 
 app.get("/:stuffyName/:stuffyType", async function(req, res) {
