@@ -8,8 +8,7 @@
 }
 
 .thumbnail {
-     height: 60%;
-     width: 60%;
+     height: 25vw;
      object-fit: contain;
 }
 
