@@ -11,24 +11,25 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', async (req, res) => {
-     //res.send(ejs.render('<%= fish%>', {fish: 'shark'}))
-     //res.render('index.ejs', {fish : 'tuna', image: 'https://media.discordapp.net/attachments/515341359771680788/746389232192585788/20200821_112356.jpg?width=509&height=679', options :[1,2,3]})
-     //thing = await new DatabaseController(process.env.DATABASE_URL).create()
      var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type FROM stuffies ORDER BY name ASC;')
-     var stevenStuffies = await new DatabaseController(process.env.DATABASE_URL).command("Select name, animal_type, image FROM stuffies WHERE owner = $1 ORDER BY name;", ["Steven"])
-     var monicaStuffies = await new DatabaseController(process.env.DATABASE_URL).command("Select name, animal_type, image FROM stuffies WHERE owner = $1 ORDER BY name;", ["Monica"])
      const anchorDateSteven = DateTime.fromISO('2020-08-22',{zone : 'America/Toronto'})
      const anchorDateMonica = DateTime.fromISO('2020-08-12',{zone : 'America/Toronto'})
-     console.log(anchorDateMonica)
      var currentDate = new Date()
-     console.log(currentDate)
-     //currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
-     //console.log(currentDate)
-     var dateDifferenceSteven = Math.floor((currentDate - anchorDateSteven)/(1000*60*60*24)) % stevenStuffies.rowCount
-     var dateDifferenceMonica = Math.floor((currentDate - anchorDateMonica)/(1000*60*60*24)) % monicaStuffies.rowCount
-     console.log(dateDifferenceSteven)
-     var stevenStuffyOfTheDay = stevenStuffies.rows[dateDifferenceSteven]
-     var monicaStuffyOfTheDay = monicaStuffies.rows[dateDifferenceMonica]
+     var stevenStuffies = []
+     var monicaStuffies = []
+     for (num in menuResult.rows) {
+          if (menuResult.rows[num].owner === "Monica") {
+               monicaStuffies.push(menuResult.rows[num])
+               console.log(await stevenStuffies[0])
+          }
+          else if (menuResult.rows[num].owner === "Steven") {
+               stevenStuffies.push(menuResult.rows[num])
+          }
+     }
+     var dateDifferenceSteven = Math.floor((currentDate - anchorDateSteven)/(1000*60*60*24)) % stevenStuffies.length
+     var dateDifferenceMonica = Math.floor((currentDate - anchorDateMonica)/(1000*60*60*24)) % monicaStuffies.length
+     var stevenStuffyOfTheDay = stevenStuffies[dateDifferenceSteven]
+     var monicaStuffyOfTheDay = monicaStuffies[dateDifferenceMonica]
      res.render("homepage.ejs", {
           nameSteven: stevenStuffyOfTheDay.name,
           nameMonica: monicaStuffyOfTheDay.name,
