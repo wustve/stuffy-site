@@ -5,3 +5,26 @@
      background-color: lightcoral;
      float : top;
 }
+#header li a{
+     background-color:rgb(32, 32, 32);
+     color: white;
+     text-decoration: none;
+     padding: 1vw;
+     text-align : center;
+
+}
+#header li{
+     display: inline;
+     padding:0;
+     text-align : center;
+
+}
+#header ul{
+     list-style-type: none;
+     margin:0;
+     padding:0;
+     background-color:rgb(32, 32, 32);
+}
+#header li a:hover{
+     background-color: rgb(56, 56, 56) ;
+}

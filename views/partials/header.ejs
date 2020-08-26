@@ -1,6 +1,8 @@
 <link rel = "stylesheet" type = "text/css" href = "../header.css">
 <div id = "header">
-     <button>Steven's Stuffy of the day</button>
-     <button>Monica's Stuffy of the day</button>
-     <button>Dark/Light Toggle</button>
+  <ul>
+    <li><a href = <%='/' + stevenStuffy.name.split(' ').join('_') + '/' +stevenStuffy.animal_type %>>Steven's stuffy of the day</a></li>
+    <li><a href = <%='/' + monicaStuffy.name.split(' ').join('_') + '/' +monicaStuffy.animal_type %>>Monica's stuffy of the day</a></li>
+    <li><button>Dark/Light Toggle</button></li>
+  </ul>
 </div>

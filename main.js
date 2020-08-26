@@ -11,11 +11,11 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
 
 function stuffyOfTheDay (stuffies){
-     var stevenStuffies = []
-     var monicaStuffies = []
+     let stevenStuffies = []
+     let monicaStuffies = []
      const anchorDateSteven = DateTime.fromISO('2020-08-22',{zone : 'America/Toronto'})
      const anchorDateMonica = DateTime.fromISO('2020-08-12',{zone : 'America/Toronto'})
-     var currentDate = new Date()
+     let currentDate = new Date()
      for (num in stuffies.rows) {
           if (stuffies.rows[num].owner === "Monica") {
                monicaStuffies.push(stuffies.rows[num])
@@ -24,11 +24,11 @@ function stuffyOfTheDay (stuffies){
                stevenStuffies.push(stuffies.rows[num])
           }
      }
-     var dateDifferenceSteven = Math.floor((currentDate - anchorDateSteven)/(1000*60*60*24)) % stevenStuffies.length
-     var dateDifferenceMonica = Math.floor((currentDate - anchorDateMonica)/(1000*60*60*24)) % monicaStuffies.length
-     var stevenStuffyOfTheDay = stevenStuffies[dateDifferenceSteven]
-     var monicaStuffyOfTheDay = monicaStuffies[dateDifferenceMonica]
-     return [stevenStuffyOfTheDay,monicaStuffyOfTheDay]
+     let dateDifferenceSteven = Math.floor((currentDate - anchorDateSteven)/(1000*60*60*24)) % stevenStuffies.length
+     let dateDifferenceMonica = Math.floor((currentDate - anchorDateMonica)/(1000*60*60*24)) % monicaStuffies.length
+     let stevenStuffy = stevenStuffies[dateDifferenceSteven]
+     let monicaStuffy = monicaStuffies[dateDifferenceMonica]
+     return [stevenStuffy,monicaStuffy]
 }
 
 
@@ -37,14 +37,12 @@ app.get('/', async (req, res) => {
      var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name ASC;')
      
      try {
-          var stevenStuffyOfTheDay,monicaStuffyOfTheDay
-          [stevenStuffyOfTheDay,monicaStuffyOfTheDay] = stuffyOfTheDay(menuResult)
+          let stevenStuffy,monicaStuffy
+          [stevenStuffy,monicaStuffy] = stuffyOfTheDay(menuResult)
           res.render("homepage.ejs", {
-               nameSteven: stevenStuffyOfTheDay.name,
-               nameMonica: monicaStuffyOfTheDay.name,
-               //stuffies: [monicaStuffyOfTheDay.name, stevenStuffyOfTheDay.name], 
-               imageSteven: stevenStuffyOfTheDay.image, 
-               imageMonica: monicaStuffyOfTheDay.image, 
+               stevenStuffy: stevenStuffy,
+               monicaStuffy: monicaStuffy,
+               //stuffies: [monicaStuffy.name, stevenStuffy.name], 
                options: menuResult.rows
           })
      }
@@ -57,15 +55,17 @@ app.get('/', async (req, res) => {
 app.get("/:stuffyName/:stuffyType", async function(req, res) {
      console.log(req.params.stuffyName)
      console.log(req.params.stuffyType)
-     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type FROM stuffies ORDER BY name ASC;')
+     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type,owner FROM stuffies ORDER BY name ASC;')
      var dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g,' '), req.params.stuffyType])
      
      console.log(dbResult)
      if (dbResult.rowCount > 0) {
-          var stevenStuffyOfTheDay,monicaStuffyOfTheDay
-          [stevenStuffyOfTheDay,monicaStuffyOfTheDay] = stuffyOfTheDay(menuResult)
+          let stevenStuffy,monicaStuffy
+          [stevenStuffy,monicaStuffy] = stuffyOfTheDay(menuResult)
           res.render("article.ejs", {
-               name : dbResult.rows[0].name, 
+               name : dbResult.rows[0].name,
+               stevenStuffy: stevenStuffy,
+               monicaStuffy: monicaStuffy, 
                animal_type : dbResult.rows[0].animal_type, 
                image : dbResult.rows[0].image, 
                owner: dbResult.rows[0].owner, 
