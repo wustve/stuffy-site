@@ -5,12 +5,12 @@
      margin-left:10%; /*width of menu*/
      text-align: center;
      width: 90%;
-     background-color: grey;
      padding :0;
      overflow-y: auto;
 }
 
 #stuffyOfTheDayWrapper {
+     background-color: rgb(72, 75, 73);
      width : 80%;
      margin: auto;
 }
@@ -29,4 +29,6 @@
 }
 body{
      margin:0;
+     background-color: rgb(37, 39, 38);
+     color:white;
 }
