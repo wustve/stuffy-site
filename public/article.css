@@ -1,10 +1,14 @@
+body {
+     background-color: lightblue;
+     margin:0;
+}
 .infoBox {
      width: 30%;
 }
 
 .wrapper {
-     width: 90%;
-     margin-left: 10%;
+     width: 89%;
+     margin-left: 11%;
 }
 
 .thumbnail {
@@ -12,6 +16,3 @@
      object-fit: contain;
 }
 
-body {
-     background-color: lightblue;
-}

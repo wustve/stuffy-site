@@ -11,7 +11,7 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', async (req, res) => {
-     //await new DatabaseController(process.env.DATABASE_URL).create()
+     await new DatabaseController(process.env.DATABASE_URL).create()
      var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name ASC;')
      const anchorDateSteven = DateTime.fromISO('2020-08-22',{zone : 'America/Toronto'})
      const anchorDateMonica = DateTime.fromISO('2020-08-12',{zone : 'America/Toronto'})
