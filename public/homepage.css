@@ -1,5 +1,6 @@
 .header {
      text-align: center; 
+     border-bottom-style: solid;
 }
 .content{
      margin-left:10%; /*width of menu*/
@@ -18,6 +19,7 @@
      height: 100%;
      width: 40%;
      display: inline-block;
+
 }
 
 .stuffyOfTheDayPic {
@@ -31,4 +33,5 @@ body{
      margin:0;
      background-color: rgb(37, 39, 38);
      color:white;
+     font-family: 'Merriweather', serif;
 }

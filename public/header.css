@@ -11,6 +11,9 @@
      text-decoration: none;
      padding: 1vw;
      text-align : center;
+     font-weight: bold;
+     font-family: 'Merriweather', serif;
+
 }
 #header li{
      display: inline;

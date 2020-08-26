@@ -4,6 +4,10 @@
     color: white;
     text-decoration: none;
     padding: 1vw;
+    font-weight: bold;
+    font-family: 'Merriweather', serif;
+    font-size: 1vw;
+
 }
 .menu a:hover{
     background-color: rgb(56, 56, 56) ;
