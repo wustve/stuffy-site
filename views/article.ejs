@@ -13,15 +13,23 @@
                <div class = "title">
                     <h1><%=name%></h1>
                </div>
-               <div class = "basic-info-wrapper">
+               <div class = "info-wrapper">
                     <div class ="image">
                          <img src="<%=image%>" class = "thumbnail">
                     </div>
-                    <div class = "basic-info">
+                    <!--div class = "basic-info">
                          <p><b>Animal Type:</b> <%=animal_type%></p>
                          <p><b>Owner:</b> <%=owner%></p>
-                    </div>
+                    </div-->
                     <div class = "paragraphs">
+                         <div class = "title">
+                              <h2>Owner</h2>
+                         </div>
+                         <p><%=owner%></p>
+                         <div class = "title">
+                              <h2>Animal Type</h2>
+                         </div>
+                         <p><%=animal_type%></p>
                          <% if (name_origin !== null) {%>
                               <div class = "title">
                                    <h2>Name Origin</h2>
