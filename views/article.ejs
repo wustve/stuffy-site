@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
      <head>
-          <title>Stuffy Site: <%=name%></title>
+          <title>Stuffy Site: <%=selectedStuffy.name%></title>
           <link rel = "stylesheet" type = "text/css" href = "../article.css">
           <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
           <link href="https://fonts.googleapis.com/css2?family=Assistant&display=swap" rel="stylesheet">   
@@ -11,42 +11,42 @@
           <%- include ("partials/menu.ejs")%>
           <div id = "content-wrapper">
                <div class = "title">
-                    <h1><%=name%></h1>
+                    <h1><%=selectedStuffy.name%></h1>
                </div>
                <div class = "info-wrapper">
                     <div class ="image">
-                         <img src="<%=image%>" class = "thumbnail">
+                         <img src="<%=selectedStuffy.image%>" class = "thumbnail">
                     </div>
                     <!--div class = "basic-info">
-                         <p><b>Animal Type:</b> <%=animal_type%></p>
+                         <p><b>Animal Type:</b> <%=selectedStuffy.animal_type%></p>
                          <p><b>Owner:</b> <%=owner%></p>
                     </div-->
                     <div class = "paragraphs">
                          <div class = "title">
                               <h2>Owner</h2>
                          </div>
-                         <p><%=owner%></p>
+                         <p><%=selectedStuffy.owner%></p>
                          <div class = "title">
                               <h2>Animal Type</h2>
                          </div>
-                         <p><%=animal_type%></p>
-                         <% if (name_origin !== null) {%>
+                         <p><%=selectedStuffy.animal_type%></p>
+                         <% if (selectedStuffy.name !== null) {%>
                               <div class = "title">
                                    <h2>Name Origin</h2>
                               </div>
-                              <p><%=name_origin%></p>
+                              <p><%=selectedStuffy.name_origin%></p>
                          <% }%>
-                         <% if (origin !== null) {%>
+                         <% if (selectedStuffy.origin !== null) {%>
                               <div class = "title">
                                    <h2>Origin</h2>
                               </div>
-                              <p><%=origin%></p>
+                              <p><%=selectedStuffy.origin%></p>
                          <% }%>
-                         <% if (other_notes !== null) {%>
+                         <% if (selectedStuffy.other_notes !== null) {%>
                               <div class = "title">
                                    <h2>Other Notes</h2>
                               </div>
-                              <p><%=other_notes%></p>
+                              <p><%=selectedStuffy.other_notes%></p>
                          <% }%>
                     </div>
                </div>

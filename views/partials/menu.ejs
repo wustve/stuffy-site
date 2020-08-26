@@ -5,9 +5,8 @@
           <% para = '/' + options[i].name.split(' ').join('_')%>
           <% para = para + '/'+options[i].animal_type%>
           <% label = options[i].name+' ('+ options[i].animal_type +')'%>
-          <% scroll = options[i].name+'('+ options[i].animal_type +')'%>
-          <% if (name !== null && animal_type !== null) {%>
-               <% if (label === name + ' (' + animal_type + ')') {%>
+          <% if (selectedStuffy.name !== null && selectedStuffy.animal_type !== null) {%>
+               <% if (label === selectedStuffy.name + ' (' + selectedStuffy.animal_type + ')') {%>
                     <a href = "<%=para + '#active'%>" id = "active"><%=label%></a>
                <%} else {%>
                     <a href = "<%=para + '#active'%>"><%=label%></a>

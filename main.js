@@ -63,15 +63,9 @@ app.get("/:stuffyName/:stuffyType", async function(req, res) {
           let stevenStuffy,monicaStuffy
           [stevenStuffy,monicaStuffy] = stuffyOfTheDay(menuResult)
           res.render("article.ejs", {
-               name : dbResult.rows[0].name,
                stevenStuffy: stevenStuffy,
                monicaStuffy: monicaStuffy, 
-               animal_type : dbResult.rows[0].animal_type, 
-               image : dbResult.rows[0].image, 
-               owner: dbResult.rows[0].owner, 
-               name_origin : dbResult.rows[0].name_origin, 
-               origin :  dbResult.rows[0].origin, 
-               other_notes : dbResult.rows[0].other_notes,
+               selectedStuffy : dbResult.rows[0],
                options: menuResult.rows
           })
      }
