@@ -7,10 +7,23 @@ body {
 h1 {
      font-size: 3em;
      margin-bottom: 0px;
+     font-family: 'Merriweather', serif;
+}
+
+h2 {
+     font-size: 2em;
+     margin-bottom: 0px;
+     font-family: 'Merriweather', serif;
 }
 
 p {
      font-size: 1.2em;
+}
+
+.title {
+     border-bottom-color: whitesmoke;
+     border-bottom-width: 1px;
+     border-bottom-style: solid;
 }
 
 .image {
@@ -35,15 +48,14 @@ p {
      object-fit: contain;
 }
 
+.paragraphs {
+     margin-left: 1%;
+}
+
 #content-wrapper {
      width: 88%;
      margin-left: 10%;
      padding-left: 1%;
 }
 
-#title {
-     border-bottom-color: whitesmoke;
-     border-bottom-width: 1px;
-     border-bottom-style: solid;
-}
 
