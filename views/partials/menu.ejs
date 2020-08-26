@@ -1,11 +1,17 @@
 <link rel = "stylesheet" type = "text/css" href = "../menu.css">
 <div class = 'menu'>
-    <a href = '/' id = 'home'>Home</a>
-    <% for (let i = 0; i < options.length; i++){%>
-        <% para = '/' + options[i].name.split(' ').join('_')%>
-        <% para = para + '/'+options[i].animal_type%>
-        <% label = options[i].name+' ('+ options[i].animal_type +')'%>
-        <% scroll = options[i].name+'('+ options[i].animal_type +')'%>
-        <a href = <%=para +'#' + scroll%> id = <%=scroll%>><%=label%></a>
-    <%}%>
+     <a href = '/' id = 'home'>Home</a>
+     <% for (let i = 0; i < options.length; i++){%>
+          <% para = '/' + options[i].name.split(' ').join('_')%>
+          <% para = para + '/'+options[i].animal_type%>
+          <% label = options[i].name+' ('+ options[i].animal_type +')'%>
+          <% scroll = options[i].name+'('+ options[i].animal_type +')'%>
+          <% if (name !== null && animal_type !== null) {%>
+               <% if (label === name + ' (' + animal_type + ')') {%>
+                    <a href = "<%=para + '#active'%>" id = "active"><%=label%></a>
+               <%} else {%>
+                    <a href = "<%=para + '#active'%>"><%=label%></a>
+               <%}%>
+          <%}%>
+     <%}%>
 </div>
