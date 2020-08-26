@@ -7,12 +7,18 @@
      <body>
           <%- include ("partials/header.ejs")%>
           <%- include ("partials/menu.ejs")%>
-          <div class = "wrapper">
-               <h2><%=name%></h2>
-               <div class ="infoBox">
-                    <img src="<%=image%>" class = "thumbnail">
-                    <p><b>Animal Type:</b> <%=animal_type%></p>
-                    <p><b>Owner:</b> <%=owner%></p>
+          <div id = "content-wrapper">
+               <div id = "title">
+                    <h1><%=name%></h1>
+               </div>
+               <div class = "basic-info-wrapper">
+                    <div class ="image">
+                         <img src="<%=image%>" class = "thumbnail">
+                    </div>
+                    <div class = "basic-info">
+                         <p><b>Animal Type:</b> <%=animal_type%></p>
+                         <p><b>Owner:</b> <%=owner%></p>
+                    </div>
                </div>
                <div class = "paragraphs">
                     <% if (name_origin !== null) {%>

@@ -1,19 +1,49 @@
 body {
-     background-color: lightblue;
+     background-color: rgb(37, 39, 38);
      margin: 0;
-}
-.infoBox {
-     width: 30%;
+     color: white
 }
 
-.wrapper {
+h1 {
+     font-size: 3em;
+     margin-bottom: 0px;
+}
+
+p {
+     font-size: 1.2em;
+}
+
+.image {
+     display: inline-block;
+     background-color: rgb(72, 75, 73);
+     padding: 1%
+}
+
+.basic-info {
+     background-color: rgb(72, 75, 73);
+     padding: 1%;
+     margin-left: 2%
+}
+
+.basic-info-wrapper {
+     display: flex;
+     margin-top: 1%;
+}
+
+.thumbnail {
+     width: 20vw;
+     object-fit: contain;
+}
+
+#content-wrapper {
      width: 88%;
      margin-left: 10%;
      padding-left: 1%;
 }
 
-.thumbnail {
-     height: 25vw;
-     object-fit: contain;
+#title {
+     border-bottom-color: whitesmoke;
+     border-bottom-width: 1px;
+     border-bottom-style: solid;
 }
 
