@@ -1,11 +1,12 @@
 #header {
      width : 90%;
      margin-left: 10%;
-     text-align: center;
      background-color:rgb(32, 32, 32);
-
+     display: flex;
+     justify-content: center;
+     flex-flow: row wrap;
 }
-#header li a{
+#header a{
      background-color:rgb(32, 32, 32);
      color: white;
      text-decoration: none;
@@ -13,25 +14,7 @@
      text-align : center;
      font-weight: bold;
      font-family: 'Merriweather', serif;
-     font-size:1vw;
-     
 }
-#header li{
-     display: inline;
-     padding:0;
-     margin:0;
-     text-align : center;
-}
-#header ul{
-     list-style-type: none;
-     margin:0;
-     padding: 1vw;
-}
-#header li a:hover{
+#header a:hover{
      background-color: rgb(56, 56, 56) ;
-}
-
-.lightMode {
-     background-color: white;
-     color: black;
 }

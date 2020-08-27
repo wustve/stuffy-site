@@ -1,10 +1,8 @@
 <link rel = "stylesheet" type = "text/css" href = "../header.css">
 <div id = "header">
-  <ul>
-    <li><a href = <%='/' + stevenStuffy.name.split(' ').join('_') + '/' +stevenStuffy.animal_type +'#active'%>>Steven's stuffy of the day</a></li>
-    <li><a href = <%='/' + monicaStuffy.name.split(' ').join('_') + '/' +monicaStuffy.animal_type +'#active'%>>Monica's stuffy of the day</a></li>
-    <li><button type = "button" onclick = "addClass()">Dark/Light Toggle</button>
-  </ul>
+    <a href = <%='/' + stevenStuffy.name.split(' ').join('_') + '/' +stevenStuffy.animal_type +'#active'%>>Steven's stuffy of the day</a>
+    <a href = <%='/' + monicaStuffy.name.split(' ').join('_') + '/' +monicaStuffy.animal_type +'#active'%>>Monica's stuffy of the day</a>
+    <button type = "button" onclick = "addClass()">Dark/Light Toggle</button>
   <script>
     function addClass() {
       var body = document.getElementByTagName("BODY")[0];
