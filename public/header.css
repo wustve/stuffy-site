@@ -13,20 +13,25 @@
      text-align : center;
      font-weight: bold;
      font-family: 'Merriweather', serif;
-
+     font-size:1vw;
+     
 }
 #header li{
      display: inline;
      padding:0;
      margin:0;
      text-align : center;
-
 }
 #header ul{
      list-style-type: none;
      margin:0;
-     padding:1vw;
+     padding: 1vw;
 }
 #header li a:hover{
      background-color: rgb(56, 56, 56) ;
+}
+
+.lightMode {
+     background-color: white;
+     color: black;
 }
