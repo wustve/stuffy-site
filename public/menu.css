@@ -41,6 +41,7 @@
     background-color:var(--main-bg-colour);
     padding:.5vw;
     border:solid; 
+    border-width: 0.2vw;
     box-sizing: border-box;/*includes border, padding in width and height*/
     color: var(--text-colour);
     font-size: 1vw;

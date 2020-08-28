@@ -9,6 +9,7 @@
      overflow:hidden;
      font-size:1vw;
      border-bottom:solid;
+     border-width: 0.2vw;
      box-sizing: border-box;
 }
 #header a{
