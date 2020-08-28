@@ -11,9 +11,12 @@ function setCheckboxColourMode() {
      if (colourMode === "dark") {
           checkbox.removeAttribute("checked");
           slider.innerHTML = "&#x263E";
+          slider.style.lineHeight = '4vh';
      }
      else if (colourMode === "light") {
           checkbox.setAttribute("checked", "true");
           slider.innerHTML = "&#x263C";
+          slider.style.lineHeight = '5vh';
+
      }
 }
