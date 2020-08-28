@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html colour-mode = "dark">
+     <script src = "../retrieveColourMode.js"></script> 
      <head>
+          <link rel = 'stylesheet' type = 'text/css' href = '/hideFOUC.css'>
           <title>Stuffy Site: <%=selectedStuffy.name%></title>
           <link rel = "stylesheet" type = "text/css" href = "../article.css">
           <link rel = "stylesheet" type = "text/css" href = "../colourmode.css">
           <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
           <link href="https://fonts.googleapis.com/css2?family=Assistant&display=swap" rel="stylesheet"> 
-          <script src = "../retrieveColourMode.js"></script> 
      </head>
      <body onload = "setButtonColourMode()">
           <%- include ("partials/menu.ejs")%> <!--Put the menu first as otherwise the jump to active doesnt always work?-->
@@ -53,5 +54,6 @@
                     </div>
                </div>
           </div>
+          <link rel = 'stylesheet' type = 'text/css' href = '/showContent.css'>
      </body>
 </html>
