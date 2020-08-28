@@ -1,13 +1,17 @@
 :root[colour-mode = "light"] {
-     --main-bg-colour : rgb(220, 220, 220);
+     --main-bg-colour: rgb(220, 220, 220);
+     --header-menu-colour: rgb(200, 200, 200);
      --element-colour: rgb(180, 180, 180);
+     --hover-colour: rgb(160, 160, 160);
      --border-colour: rgb(20, 20, 20);
      --text-colour: black;
 }
 
 :root[colour-mode = "dark"] {
-     --main-bg-colour : rgb(20, 20, 20);
+     --main-bg-colour: rgb(40, 40, 40);
+     --header-menu-colour: rgb(20, 20, 20);
      --element-colour: rgb(60, 60, 60);
+     --hover-colour: rgb(80, 80, 80);
      --border-colour: rgb(220, 220, 220);
      --text-colour: whitesmoke;
 }

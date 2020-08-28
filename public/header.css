@@ -1,7 +1,7 @@
 #header {
      width : 90%;
      margin-left: 10%;
-     background-color:var(--main-bg-colour);
+     background-color:var(--header-menu-colour);
      display: flex;
      justify-content: center;
      flex-flow: row wrap;
@@ -10,7 +10,7 @@
      font-size:1vw;
 }
 #header a{
-     background-color:var(--main-bg-colour);
+     background-color: inherit;
      color: var(--text-colour);
      text-decoration: none;
      font-weight: bold;
@@ -20,5 +20,5 @@
      padding:0.8vw;
 }
 #header a:hover{
-     background-color: var(--element-colour) ;
+     background-color: var(--hover-colour) ;
 }
