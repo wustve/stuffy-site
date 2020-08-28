@@ -3,7 +3,6 @@
      margin-left: 10%;
      background-color:var(--header-menu-colour);
      display: flex;
-     justify-content: center;
      flex-direction: row;
      height:7vh;
      overflow:hidden;
@@ -26,16 +25,18 @@
      background-color: var(--hover-colour) ;
 }
 
-#toggle-housing {
+#toggle-housing,#toggle-housing-hidden {
+     flex:1;
      padding: 1vh;
      width: 10vh;
      height: 5vh;
 }
 
-.toggle {
+.toggle,.toggle-hidden {
      cursor: pointer;
      position: absolute;
      width: 10vh;
+     right:0;
      height: 5vh;
      background-color: var(--element-colour);
 	border-radius: 2.5vh;
@@ -47,12 +48,12 @@ input#darkLight {
      display: none;
 }
 
-#slider {
+#slider,#slider-hidden {
      position: absolute;
-     visibility: hidden;
      width: 4vh;
      height: 4vh;
      top: 0.5vh;
+     left: 0.5vh;
 	background: var(--header-menu-colour);
      border-radius: 2vh;
      font-size: 1em;
