@@ -1,4 +1,3 @@
-
 function changeSiteColour() {
      var html = document.querySelector("html");
      var button = document.querySelector("#header button");
