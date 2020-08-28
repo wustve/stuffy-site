@@ -15,7 +15,7 @@
 #menu a{
     display: block;
     background-color: inherit;
-    color: inherit;
+    color: var(--text-colour);
     text-decoration: none;
     padding: 1vw;
     font-weight: bold;
@@ -23,20 +23,41 @@
     font-size: 1vw;
 
 }
-#menu a:hover{
-    background-color: rgb(56, 56, 56) ;
+.menu a:hover{
+    background-color: var(--hover-colour) ;
+}
+.menu{
+    width: 10%;
+    height: 100%;
+    background-color: var(--header-menu-colour);
+    position: fixed;
+    left:0;
+    top:0;
+    z-index: 1;
+    padding : 0;
+}
+.selection{
+    margin:0;
+    padding:0;
+    overflow-y:auto;
+    height:93vh;
+    
 }
 #active {
-     background-color: rgb(81, 85, 84);
+     background-color: var(--element-colour);
 }
 #searchBar {
-    padding:1%;
     margin:0;
-    height:3%;
-    width:96%;
+    height:7vh;
+    width:100%;
     font-weight: bold;
     position:relative;
-    background-color: rgb(32, 32, 32);
-    color: white;
-    border-style: solid;
+    background-color:var(--main-bg-colour);
+    padding:.5vw;
+    border:solid; 
+    border-width: 0.2vw;
+    box-sizing: border-box;/*includes border, padding in width and height*/
+    color: var(--text-colour);
+    font-size: 1vw;
+
 }

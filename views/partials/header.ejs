@@ -1,36 +1,7 @@
 <link rel = "stylesheet" type = "text/css" href = "../header.css">
 <div id = "header">
-  <ul id = "links">
-    <li><a href = <%='/' + stevenStuffy.name.split(' ').join('_') + '/' +stevenStuffy.animal_type +'#active'%>>Steven's stuffy of the day</a></li>
-    <li><a href = <%='/' + monicaStuffy.name.split(' ').join('_') + '/' +monicaStuffy.animal_type +'#active'%>>Monica's stuffy of the day</a></li>
-    <li><button type = "button" onclick = "addClass()">Dark/Light Toggle</button>
-  </ul>
-  <script>
-    function addClass() {
-      var body = document.getElementsByTagName("BODY")[0];
-      var header = document.getElementById("header");
-      var menu = document.getElementById("menu");
-      var headerLinks = header.querySelectorAll("#links > li");
-      var menuLinks = menu.querySelectorAll("a")
-      try {
-           var stuffyOfTheDay = document.getElementById("stuffyOfTheDayWrapper");
-           stuffyOfTheDay.classList.toggle("lightModeElements");
-      }
-      catch {
-           try {
-                var contentWrapper = document.querySelector("#content-wrapper");
-                contentWrapper.classList.toggle("lightModeBorders")
-           }
-           catch {
-           }
-      }
-      body.classList.toggle("lightMode");
-      for (link of headerLinks) {
-           link.classList.toggle("lightModeHover")
-      }
-      for (link of menuLinks) {
-           link.classList.toggle("lightModeHover")
-      }
-    }
-  </script>
+     <a href = <%='/' + stevenStuffy.name.split(' ').join('_') + '/' +stevenStuffy.animal_type +'#active'%>>Steven's stuffy of the day</a>
+     <a href = <%='/' + monicaStuffy.name.split(' ').join('_') + '/' +monicaStuffy.animal_type +'#active'%>>Monica's stuffy of the day</a>
+     <script src = "../darkLight.js"></script>
+     <button onclick = "changeSiteColour()" class = "darkMode">Light Mode</button>
 </div>

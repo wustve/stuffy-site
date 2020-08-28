@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html colour-mode = "dark">
      <head>
           <title>Stuffy Site: <%=selectedStuffy.name%></title>
           <link rel = "stylesheet" type = "text/css" href = "../article.css">
+          <link rel = "stylesheet" type = "text/css" href = "../colourmode.css">
           <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
           <link href="https://fonts.googleapis.com/css2?family=Assistant&display=swap" rel="stylesheet">   
      </head>
      <body>
+          <%- include ("partials/menu.ejs")%> <!--Put the menu first as otherwise the jump to active doesnt always work?-->
           <%- include ("partials/header.ejs")%>
-          <%- include ("partials/menu.ejs")%>
           <div id = "content-wrapper">
                <div class = "title">
                     <h1><%=selectedStuffy.name%></h1>

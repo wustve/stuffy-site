@@ -18,42 +18,27 @@
 #header {
      width : 90%;
      margin-left: 10%;
-     text-align: center;
-     background-color: inherit;
-     color: inherit;
-
-}
-#header li a{
-     background-color: inherit;
-     color: inherit;
-     background-color:rgb(32, 32, 32);
+     background-color:var(--header-menu-colour);
      display: flex;
      justify-content: center;
      flex-flow: row wrap;
+     height:7vh;
+     overflow:hidden;
+     font-size:1vw;
+     border-bottom:solid;
+     border-width: 0.2vw;
+     box-sizing: border-box;
 }
 #header a{
-     background-color:rgb(32, 32, 32);
-     color: white;
+     background-color: inherit;
+     color: var(--text-colour);
      text-decoration: none;
-     padding: 1vw;
-     text-align : center;
      font-weight: bold;
      font-family: 'Merriweather', serif;
-}
-#header li{
-     display: inline;
-     padding:0;
-     margin:0;
-     text-align : center;
-}
-#header ul{
-     list-style-type: none;
-     margin:0;
-     padding: 1vw;
-}
-#header li a:hover{
-     background-color: inherit;
+     margin-bottom:auto;
+     margin-top: auto;
+     padding:0.8vw;
 }
 #header a:hover{
-     background-color: inherit;
+     background-color: var(--hover-colour) ;
 }
