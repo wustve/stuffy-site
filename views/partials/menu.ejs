@@ -1,7 +1,8 @@
 <link rel = "stylesheet" type = "text/css" href = "../menu.css">
 <div class = 'menu'>
      <input type = 'text' id = 'searchBar' onkeyup = 'filter()' placeholder = 'Search' title= 'Enter a stuffy'>
-     <div class= 'selection'>
+     <script src = '/search.js'></script>
+     <div id= 'selection'>
           <% try {%>
                <% if (selectedStuffy.name && selectedStuffy.animal_type) {%>
                     <a href = '/'>Home</a>

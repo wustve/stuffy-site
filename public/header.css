@@ -21,7 +21,7 @@
      background-color:var(--header-menu-colour);
      display: flex;
      justify-content: center;
-     flex-flow: row wrap;
+     flex-direction: row;
      height:7vh;
      overflow:hidden;
      font-size:1vw;
@@ -37,7 +37,7 @@
      font-family: 'Merriweather', serif;
      margin-bottom:auto;
      margin-top: auto;
-     padding:0.8vw;
+     padding:2vh;
 }
 #header a:hover{
      background-color: var(--hover-colour) ;
