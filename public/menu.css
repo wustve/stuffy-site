@@ -1,13 +1,13 @@
 .menu{
-     width: 10%;
-     height: 96vw;
-     background-color: inherit;
-     color: inherit;
-     position: fixed;
-     z-index:1;
-     top: 0;
-     left:0;
-     padding : 0;
+    width: 10%;
+    height: 96vw;
+    background-color: inherit;
+    color: inherit;
+    position: fixed;
+    z-index:1;
+    top: 0;
+    left:0;
+    padding : 0;
  }
 
 .menu a{
@@ -35,7 +35,7 @@
     padding : 0;
 }
 .selection{
-    margin:0;
+    margin-top:7vh;
     padding:0;
     overflow-y:auto;
     height:93vh;
@@ -49,13 +49,13 @@
     height:7vh;
     width:100%;
     font-weight: bold;
-    position:relative;
+    position:absolute;
     background-color:var(--main-bg-colour);
-    padding:.5vw;
+    padding:.5vh;
     border:solid; 
     border-width: 0.2vw;
     box-sizing: border-box;/*includes border, padding in width and height*/
     color: var(--text-colour);
     font-size: 1vw;
-
+    
 }
