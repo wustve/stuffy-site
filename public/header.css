@@ -58,7 +58,6 @@ input#darkLight {
      border-radius: 2vh;
      font-size: 2vh;
      text-align: center;
-     line-height: 3.8vh;
 }
 
 input#darkLight:checked + #slider {
