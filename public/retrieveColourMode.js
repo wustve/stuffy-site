@@ -4,6 +4,9 @@ if (colourMode !== null) {
      var html = document.querySelector("html");
      html.setAttribute("colour-mode", colourMode);
 }
+else {
+     colourMode = "dark";
+}
 
 function setCheckboxColourMode() {
      var checkbox = document.querySelector("#header .toggle input");
