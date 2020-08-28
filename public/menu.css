@@ -26,8 +26,17 @@
 #menu a:hover{
     background-color: rgb(56, 56, 56) ;
 }
-
 #active {
      background-color: rgb(81, 85, 84);
 }
-
+#searchBar {
+    padding:1%;
+    margin:0;
+    height:3%;
+    width:96%;
+    font-weight: bold;
+    position:relative;
+    background-color: rgb(32, 32, 32);
+    color: white;
+    border-style: solid;
+}

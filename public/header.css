@@ -26,13 +26,19 @@
 #header li a{
      background-color: inherit;
      color: inherit;
+     background-color:rgb(32, 32, 32);
+     display: flex;
+     justify-content: center;
+     flex-flow: row wrap;
+}
+#header a{
+     background-color:rgb(32, 32, 32);
+     color: white;
      text-decoration: none;
      padding: 1vw;
      text-align : center;
      font-weight: bold;
      font-family: 'Merriweather', serif;
-     font-size:1vw;
-     
 }
 #header li{
      display: inline;
@@ -46,5 +52,8 @@
      padding: 1vw;
 }
 #header li a:hover{
+     background-color: inherit;
+}
+#header a:hover{
      background-color: inherit;
 }

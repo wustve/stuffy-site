@@ -1,28 +1,30 @@
 <link rel = "stylesheet" type = "text/css" href = "../menu.css">
-<input type = 'text' id = 'searchBar' onkeyup = 'filter()' placeholder = 'Search' title= 'Enter a stuffy'>
-<div id = 'menu'>
-     <% try {%>
-          <% if (selectedStuffy.name && selectedStuffy.animal_type) {%>
+<div class = 'menu'>
+     <input type = 'text' id = 'searchBar' onkeyup = 'filter()' placeholder = 'Search' title= 'Enter a stuffy'>
+     <div class= 'selection'>
+          <% try {%>
+               <% if (selectedStuffy.name && selectedStuffy.animal_type) {%>
+                    <a href = '/'>Home</a>
+                    <% for (let i = 0; i < options.length; i++){%>
+                         <% para = '/' + options[i].name.split(' ').join('_')%>
+                         <% para = para + '/'+options[i].animal_type%>
+                         <% label = options[i].name+' ('+ options[i].animal_type +')'%>
+                         <!--% scroll = options[i].name+'('+ options[i].animal_type +')'%-->
+                         <% if (label === selectedStuffy.name + ' (' + selectedStuffy.animal_type + ')') {%>
+                              <a href = "<%=para + '#active'%>" id = "active"><%=label%></a>
+                         <%} else {%>
+                              <a href = "<%=para + '#active'%>"><%=label%></a>
+                         <%}%>
+                    <%}%>
+               <%}%>
+          <%} catch {%>
                <a href = '/'>Home</a>
                <% for (let i = 0; i < options.length; i++){%>
                     <% para = '/' + options[i].name.split(' ').join('_')%>
                     <% para = para + '/'+options[i].animal_type%>
                     <% label = options[i].name+' ('+ options[i].animal_type +')'%>
-                    <!--% scroll = options[i].name+'('+ options[i].animal_type +')'%-->
-                    <% if (label === selectedStuffy.name + ' (' + selectedStuffy.animal_type + ')') {%>
-                         <a href = "<%=para + '#active'%>" id = "active"><%=label%></a>
-                    <%} else {%>
-                         <a href = "<%=para + '#active'%>"><%=label%></a>
-                    <%}%>
+                    <a href = "<%=para + '#active'%>"><%=label%></a>
                <%}%>
           <%}%>
-     <%} catch {%>
-          <a href = '/' id = 'active'>Home</a>
-          <% for (let i = 0; i < options.length; i++){%>
-               <% para = '/' + options[i].name.split(' ').join('_')%>
-               <% para = para + '/'+options[i].animal_type%>
-               <% label = options[i].name+' ('+ options[i].animal_type +')'%>
-               <a href = "<%=para + '#active'%>"><%=label%></a>
-          <%}%>
-     <%}%>
+     </div>
 </div>
