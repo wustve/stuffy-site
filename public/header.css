@@ -57,6 +57,8 @@ input#darkLight {
 	background: var(--header-menu-colour);
      border-radius: 2vh;
      font-size: 2vh;
+     display:flex;
+     justify-content: center;
      text-align: center;
      line-height: 4vh;
 }
