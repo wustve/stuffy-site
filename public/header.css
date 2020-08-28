@@ -8,6 +8,8 @@
      height:7vh;
      overflow:hidden;
      font-size:1vw;
+     border-bottom:solid;
+     box-sizing: border-box;
 }
 #header a{
      background-color:var(--main-bg-colour);
