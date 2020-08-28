@@ -42,7 +42,7 @@
 	border-radius: 2.5vh;
 }
 
-input {
+input#darkLight {
      height: 0;
      width: 0;
      display: none;
@@ -59,6 +59,6 @@ input {
 	transition: 0.3s;
 }
 
-input:checked + #slider {
+input#darkLight:checked + #slider {
 	transform: translateX(7vh);
 }
