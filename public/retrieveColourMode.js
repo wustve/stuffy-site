@@ -1,11 +1,9 @@
 var colourMode = localStorage.getItem("colour-mode");
 console.log(colourMode)
-if (colourMode == null) {
-     colourMode = "dark"
-     localStorage.setItem("colour-mode", "dark");
+if (colourMode !== null) {
+     var html = document.querySelector("html");
+     html.setAttribute("colour-mode", colourMode);
 }
-var html = document.querySelector("html");
-html.setAttribute("colour-mode", colourMode)
 
 function setButtonColourMode() {
      var button = document.querySelector("#header button");
