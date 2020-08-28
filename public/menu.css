@@ -34,7 +34,7 @@
     z-index: 1;
     padding : 0;
 }
-.selection{
+#selection{
     margin-top:7vh;
     padding:0;
     overflow-y:auto;
@@ -49,13 +49,12 @@
     height:7vh;
     width:100%;
     font-weight: bold;
-    position:absolute;
+    position:absolute; /*relative makes it move on high zooms*/
     background-color:var(--main-bg-colour);
     padding:.5vh;
     border:solid; 
     border-width: 0.2vw;
     box-sizing: border-box;/*includes border, padding in width and height*/
     color: var(--text-colour);
-    font-size: 1vw;
-    
+    font-size: 1vw; 
 }
