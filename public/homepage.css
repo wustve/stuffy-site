@@ -11,28 +11,39 @@
 
 #stuffyOfTheDayWrapper {
      background-color: var(--element-colour);
-     width : 80%;
+     padding:0;
+     width : 54vw;
      margin: auto;
+     display: flex;
+     flex-direction: row;
+     justify-content: center;
+     box-sizing: border-box;
+     border:solid;
 }
 
 .stuffyOfTheDay {
      height: 100%;
-     width: 40%;
-     display: inline-block;
+     width: 27vw;
+     padding: 1vw;
+     box-sizing: border-box;
+}
 
+.stuffyOfTheDay h2{
+     border-bottom:solid;
+     border-width:1px;
 }
 
 .stuffyOfTheDayPic {
-     text-align: center;
+     display:flex;
+     justify-content: center;
      object-fit: contain;
      height: 25vw;
      width: 25vw;
-     display:inline-block;     
 }
 
 body {
      margin:0;
      background-color: var(--main-bg-colour);
-     color: var(--text-colour);
+     color:var(--text-colour);
      font-family: 'Merriweather', serif;
 }
