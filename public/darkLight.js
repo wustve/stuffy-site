@@ -1,6 +1,7 @@
+
 function changeSiteColour() {
      var html = document.querySelector("html");
-     var button = document.querySelector("#header > button");
+     var button = document.querySelector("#header button");
      if (button.className === "darkMode") {
           html.setAttribute("colour-mode", "light");
           button.setAttribute("class", "lightMode");
@@ -14,4 +15,3 @@ function changeSiteColour() {
           localStorage.setItem("colour-mode", "dark");
      }
 }
-
