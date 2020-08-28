@@ -3,7 +3,6 @@
      margin-left: 10%;
      background-color:var(--header-menu-colour);
      display: flex;
-     justify-content: center;
      flex-direction: row;
      height:7vh;
      overflow:hidden;
@@ -26,15 +25,17 @@
      background-color: var(--hover-colour) ;
 }
 
-#toggle-housing {
+#toggle-housing,#toggle-housing-hidden {
+     flex:1;
      padding: 1vh;
      width: 12vh;
      height: 70%;
 }
 
-.toggle {
+.toggle,.toggle-hidden {
      cursor: pointer;
      position: absolute;
+     right:0;
      width: 12vh;
      height: 5vh;
      background-color: var(--element-colour);
@@ -47,7 +48,7 @@ input#darkLight {
      display: none;
 }
 
-#slider {
+#slider,#slider-hidden {
      position: absolute;
      width: 4vh;
      height: 4vh;
@@ -55,7 +56,6 @@ input#darkLight {
      left: 0.5vh;
 	background: #fff;
 	border-radius: 2vh;
-	transition: 0.3s;
 }
 
 input#darkLight:checked + #slider {
