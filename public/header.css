@@ -1,7 +1,7 @@
 #header {
      width : 90%;
      margin-left: 10%;
-     background-color:rgb(32, 32, 32);
+     background-color:var(--main-bg-colour);
      display: flex;
      justify-content: center;
      flex-flow: row wrap;
@@ -10,8 +10,8 @@
      font-size:1vw;
 }
 #header a{
-     background-color:rgb(32, 32, 32);
-     color: white;
+     background-color:var(--main-bg-colour);
+     color: var(--text-colour);
      text-decoration: none;
      font-weight: bold;
      font-family: 'Merriweather', serif;
@@ -20,5 +20,5 @@
      padding:0.8vw;
 }
 #header a:hover{
-     background-color: rgb(56, 56, 56) ;
+     background-color: var(--element-colour) ;
 }

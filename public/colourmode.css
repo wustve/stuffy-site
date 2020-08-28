@@ -1,0 +1,13 @@
+:root[colour-mode = "light"] {
+     --main-bg-colour : rgb(220, 220, 220);
+     --element-colour: rgb(180, 180, 180);
+     --border-colour: rgb(20, 20, 20);
+     --text-colour: black;
+}
+
+:root[colour-mode = "dark"] {
+     --main-bg-colour : rgb(20, 20, 20);
+     --element-colour: rgb(60, 60, 60);
+     --border-colour: rgb(220, 220, 220);
+     --text-colour: whitesmoke;
+}
