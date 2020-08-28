@@ -5,14 +5,12 @@ if (colourMode !== null) {
      html.setAttribute("colour-mode", colourMode);
 }
 
-function setButtonColourMode() {
-     var button = document.querySelector("#header button");
+function setCheckboxColourMode() {
+     var checkbox = document.querySelector("#header .toggle input");
      if (colourMode === "dark") {
-          button.setAttribute("class", "darkMode")
-          button.innerHTML = "Light Mode"
+          checkbox.removeAttribute("checked")
      }
      else if (colourMode === "light") {
-          button.setAttribute("class", "lightMode")
-          button.innerHTML = "Dark Mode"
+          checkbox.setAttribute("checked", "true")
      }
 }

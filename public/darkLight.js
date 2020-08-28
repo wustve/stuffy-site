@@ -1,16 +1,12 @@
-function changeSiteColour() {
+function changeSiteColour(checkbox) {
      var html = document.querySelector("html");
-     var button = document.querySelector("#header button");
-     if (button.className === "darkMode") {
+     var checkbox = document.querySelector("#header .toggle input");
+     if (checkbox.checked === true) {
           html.setAttribute("colour-mode", "light");
-          button.setAttribute("class", "lightMode");
-          button.innerHTML = "Dark Mode"
           localStorage.setItem("colour-mode", "light");
      }
-     else if (button.className == "lightMode") {
+     else if (checkbox.checked === false) {
           html.setAttribute("colour-mode", "dark");
-          button.setAttribute("class", "darkMode");
-          button.innerHTML = "Light Mode"
           localStorage.setItem("colour-mode", "dark");
      }
 }
