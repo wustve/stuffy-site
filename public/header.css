@@ -28,14 +28,14 @@
 
 #toggle-housing {
      padding: 1vh;
-     width: 12vh;
-     height: 70%;
+     width: 10vh;
+     height: 5vh;
 }
 
 .toggle {
      cursor: pointer;
      position: absolute;
-     width: 12vh;
+     width: 10vh;
      height: 5vh;
      background-color: var(--element-colour);
 	border-radius: 2.5vh;
@@ -49,15 +49,17 @@ input#darkLight {
 
 #slider {
      position: absolute;
+     visibility: hidden;
      width: 4vh;
      height: 4vh;
      top: 0.5vh;
-     left: 0.5vh;
-	background: #fff;
-	border-radius: 2vh;
-	transition: 0.3s;
+	background: var(--header-menu-colour);
+     border-radius: 2vh;
+     font-size: 1em;
+     text-align: center;
+     line-height: 4vh;
 }
 
 input#darkLight:checked + #slider {
-	transform: translateX(7vh);
+	transform: translateX(5vh);
 }

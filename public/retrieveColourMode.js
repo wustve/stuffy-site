@@ -7,10 +7,13 @@ if (colourMode !== null) {
 
 function setCheckboxColourMode() {
      var checkbox = document.querySelector("#header .toggle input");
+     var slider = document.querySelector("#header .toggle #slider");
      if (colourMode === "dark") {
-          checkbox.removeAttribute("checked")
+          checkbox.removeAttribute("checked");
+          slider.innerHTML = "&#x263E";
      }
      else if (colourMode === "light") {
-          checkbox.setAttribute("checked", "true")
+          checkbox.setAttribute("checked", "true");
+          slider.innerHTML = "&#x263C";
      }
 }
