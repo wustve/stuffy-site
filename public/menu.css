@@ -30,7 +30,7 @@
     
 }
 #active {
-     background-color: rgb(81, 85, 84);
+    background-color: rgb(81, 85, 84);
 }
 #searchBar {
     margin:0;
@@ -39,6 +39,7 @@
     font-weight: bold;
     position:relative;
     background-color: rgb(32, 32, 32);
+    padding:.5vw;
     border:solid; 
     box-sizing: border-box;/*includes border, padding in width and height*/
     color: white;
