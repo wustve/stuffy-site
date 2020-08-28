@@ -1,7 +1,26 @@
 <link rel = "stylesheet" type = "text/css" href = "../header.css">
 <div id = "header">
-  <ul>
-    <li><a href = <%='/' + stevenStuffy.name.split(' ').join('_') + '/' +stevenStuffy.animal_type +'#active'%>>Steven's stuffy of the day</a></li>
-    <li><a href = <%='/' + monicaStuffy.name.split(' ').join('_') + '/' +monicaStuffy.animal_type +'#active'%>>Monica's stuffy of the day</a></li>
-  </ul>
+     <ul>
+          <li><a href = <%='/' + stevenStuffy.name.split(' ').join('_') + '/' +stevenStuffy.animal_type +'#active'%>>Steven's stuffy of the day</a></li>
+          <li><a href = <%='/' + monicaStuffy.name.split(' ').join('_') + '/' +monicaStuffy.animal_type +'#active'%>>Monica's stuffy of the day</a></li>
+          <li><button onclick = "changeSiteColour()" class = "darkMode">Light Mode</button></li>
+     </ul>
+     <script>
+          function changeSiteColour() {
+               var html = document.querySelector("html");
+               var button = document.querySelector("#header > ul > li > button");
+               if (button.className === "darkMode") {
+                    html.setAttribute("colour-mode", "light");
+                    button.setAttribute("class", "lightMode");
+                    button.innerHTML = "Dark Mode"
+                    localStorage.setItem("colour-mode", "light");
+               }
+               else if (button.className == "lightMode") {
+                    html.setAttribute("colour-mode", "dark");
+                    button.setAttribute("class", "darkMode");
+                    button.innerHTML = "Light Mode"
+                    localStorage.setItem("colour-mode", "dark");
+               }
+          }
+     </script>
 </div>

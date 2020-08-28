@@ -1,7 +1,7 @@
 body {
-     background-color: rgb(37, 39, 38);
+     background-color: var(--main-bg-colour);
      margin: 0;
-     color: white
+     color: var(--text-colour);
 }
 
 h1 {
@@ -21,7 +21,7 @@ p {
 }
 
 .title {
-     border-bottom-color: whitesmoke;
+     border-bottom-color: var(--border-colour);
      border-bottom-width: 1px;
      border-bottom-style: solid;
 }
@@ -31,7 +31,7 @@ p {
 }
 
 .basic-info {
-     background-color: rgb(72, 75, 73);
+     background-color: var(--element-colour);
      padding: 1%;
      margin-left: 2%
 }
@@ -44,7 +44,7 @@ p {
 .thumbnail {
      width: 20vw;
      object-fit: contain;
-     border-color: rgb(72, 75, 73);
+     border-color: var(--element-colour);
      border-style: solid;
      border-width: 20px;
 }
