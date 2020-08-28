@@ -38,6 +38,8 @@
      margin-bottom:auto;
      margin-top: auto;
      padding:2vh;
+     box-sizing: border-box;
+     height:7vh;
 }
 #header a:hover{
      background-color: var(--hover-colour) ;
