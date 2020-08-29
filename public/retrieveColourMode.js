@@ -1,13 +1,7 @@
 var colourMode = localStorage.getItem("colour-mode");
-console.log(colourMode)
 if (colourMode !== null) {
      var html = document.querySelector("html");
      html.setAttribute("colour-mode", colourMode);
-}
-else {
-     colourMode = "dark";
-     checkbox.removeAttribute("checked");
-
 }
 
 function setCheckboxColourMode() {
