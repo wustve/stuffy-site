@@ -17,6 +17,8 @@ class DatabaseController {
           try {
                //await this.client.query("CREATE TABLE Stuffies (name varchar(255), animal_type varchar(255), image varchar(255), owner varchar(255), name_origin text, origin text, other_notes text);")
                //await this.client.query("DELETE FROM stuffies WHERE name = 'Penny'")
+               //await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/515341359771680788/749109483955028109/giner.jpg' WHERE name = 'Ginger'")
+
                /*
                await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/515341359771680788/747641204577009754/blanchette.jpg' WHERE name = 'Blanchette'")
                await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/630912200491532290/747642948140925058/angela.jpg' WHERE name = 'Angela'")
@@ -31,8 +33,9 @@ class DatabaseController {
                await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/630912200491532290/747648245869576202/happy_feet.jpg' WHERE name = 'Happy Feet'")
                await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/630912200491532290/747648259899523172/jane_doe.jpg' WHERE name = 'Jane Doe'")
                await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/630912200491532290/747648273367433357/canuck.jpg' WHERE name = 'Canuck'")
-               await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/630912200491532290/747648288924237862/giner.jpg' WHERE name = 'Ginger'")
-               
+               await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/515341359771680788/749109483955028109/giner.jpg' WHERE name = 'Ginger'")
+
+
                await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/630912200491532290/747651356889841754/kawhali.jpg' WHERE name = 'Kawhali'")
                await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/630912200491532290/747651370995286016/goose.jpg' WHERE name = 'Mr. Goose'")
                await this.client.query("UPDATE stuffies SET image = 'https://cdn.discordapp.com/attachments/630912200491532290/747651387688747038/mrrat.jpg' WHERE name = 'Mr. Rat'")
