@@ -6,6 +6,8 @@ if (colourMode !== null) {
 }
 else {
      colourMode = "dark";
+     checkbox.removeAttribute("checked");
+
 }
 
 function setCheckboxColourMode() {
