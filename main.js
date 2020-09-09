@@ -34,7 +34,7 @@ function stuffyOfTheDay (stuffies){
 
 
 app.get('/', async (req, res) => {
-     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name ASC;')
+     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
      
      try {
           let stevenStuffy,monicaStuffy
@@ -55,7 +55,7 @@ app.get('/', async (req, res) => {
 app.get("/:stuffyName/:stuffyType", async function(req, res) {
      console.log(req.params.stuffyName)
      console.log(req.params.stuffyType)
-     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type,owner FROM stuffies ORDER BY name ASC;')
+     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type,owner FROM stuffies ORDER BY name, animal_type ASC;')
      var dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g,' '), req.params.stuffyType])
      
      console.log(dbResult)
