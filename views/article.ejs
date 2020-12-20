@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html colour-mode = "dark">
      <script src = "../retrieveColourMode.js"></script> 
+     <script src = "../editPage.js"></script> 
      <head>
           <link rel = 'stylesheet' type = 'text/css' href = '/hideFOUC.css'>
           <title>Stuffy Site: <%=selectedStuffy.name%></title>
@@ -25,14 +26,20 @@
                          <p><b>Owner:</b> <%=selectedStuffy.owner%></p>
                     </div-->
                     <div id = "paragraphs">
-                         <div class = "title">
-                              <h2>Owner</h2>
+                         <div id = "owner"> 
+                              <div class = "title">
+                                   <h2>Owner</h2>
+                                   <button onclick = "editPage('owner')">Edit</button>
+                              </div>
+                              <p><%=selectedStuffy.owner%></p>
                          </div>
-                         <p><%=selectedStuffy.owner%></p>
-                         <div class = "title">
-                              <h2>Animal Type</h2>
+                         <div id = "animal-type"> 
+                              <div class = "title">
+                                   <h2>Animal Type</h2>
+                                   <button onclick = "editPage('animal-type')">Edit</button>
+                              </div>
+                              <p><%=selectedStuffy.animal_type%></p>
                          </div>
-                         <p><%=selectedStuffy.animal_type%></p>
                          <% if (selectedStuffy.name_origin !== null) {%>
                               <div class = "title">
                                    <h2>Name Origin</h2>
