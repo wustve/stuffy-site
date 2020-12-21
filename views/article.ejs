@@ -14,8 +14,28 @@
           <%- include ("partials/menu.ejs")%> <!--Put the menu first as otherwise the jump to active doesnt always work?-->
           <%- include ("partials/header.ejs")%>
           <div id = "content-wrapper">
-               <div class = "title">
+               <template id = "edit-form">
+                    <form>
+                         <label for = "name">Name</label>
+                         <input type = "text" id = "name-input">
+                         <label for = "image">Image Link</label>
+                         <input type = "text" id = "image-input">
+                         <label for = "owner">Owner</label>
+                         <input type = "text" id = "owner-input">
+                         <label for = "animal-type">Animal Type</label>
+                         <input type = "text" id = "animal-type-input">
+                         <label for = "name-origin">Name Origin</label>
+                         <textarea id = "name-origin-input"></textarea>
+                         <label for = "origin">Origin</label>
+                         <textarea id = "origin-input"></textarea>
+                         <label for = "other-notes">Other Notes</label>
+                         <textarea id = "other-notes-input"></textarea>
+                         <input type = "submit" value = "Submit Edits" id = "submit">
+                    </form>
+               </template>
+               <div class = "title" id = "main-title">
                     <h1><%=selectedStuffy.name%></h1>
+                    <button onclick = "editPage()">Edit</button>
                </div>
                <div id = "info-wrapper">
                     <div id ="image">
@@ -29,14 +49,12 @@
                          <div id = "owner"> 
                               <div class = "title">
                                    <h2>Owner</h2>
-                                   <button onclick = "editPage('owner')">Edit</button>
                               </div>
                               <p><%=selectedStuffy.owner%></p>
                          </div>
                          <div id = "animal-type"> 
                               <div class = "title">
                                    <h2>Animal Type</h2>
-                                   <button onclick = "editPage('animal-type')">Edit</button>
                               </div>
                               <p><%=selectedStuffy.animal_type%></p>
                          </div>
