@@ -53,10 +53,10 @@ textarea {
 }
 
 .hidden {
-     display: none
+     display: none !important;
 }
 
-#image {
+#image-div {
      margin-top: 1%;
 }
 
@@ -96,4 +96,8 @@ textarea {
      width: auto;
 }
 
+#form-disclaimer {
+     margin-left: 10px;
+     font-size: 0.75em;
+}
 
