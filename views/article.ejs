@@ -58,19 +58,19 @@
                               <h2>Animal Type</h2>
                          </div>
                          <p id = "animalType"><%=selectedStuffy.animal_type%></p>
-                         <% if (selectedStuffy.name_origin !== null) {%>
+                         <% if (selectedStuffy.name_origin !== null && selectedStuffy.name_origin !== "") {%>
                               <div class = "title">
                                    <h2>Name Origin</h2>
                               </div>
                               <p id = "nameOrigin"><%=selectedStuffy.name_origin%></p>
                          <% }%>
-                         <% if (selectedStuffy.origin !== null) {%>
+                         <% if (selectedStuffy.origin !== null && selectedStuffy.origin !== "") {%>
                               <div class = "title">
                                    <h2>Origin</h2>
                               </div>
                               <p id = "origin"><%=selectedStuffy.origin%></p>
                          <% }%>
-                         <% if (selectedStuffy.other_notes !== null) {%>
+                         <% if (selectedStuffy.other_notes !== null && selectedStuffy.other_notes !== "") {%>
                               <div class = "title">
                                    <h2>Other Notes</h2>
                               </div>
