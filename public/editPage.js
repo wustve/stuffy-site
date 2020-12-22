@@ -28,7 +28,6 @@ function editPage() {
 
 function cancelEdit() {
      var div = document.querySelector("#content-wrapper");
-     var formTemplate = div.querySelector("#edit-form-temp");  
      var info = div.querySelector("#info-wrapper");
      var title = div.querySelector("#main-title");
      var form = div.querySelector("#edit-form");
