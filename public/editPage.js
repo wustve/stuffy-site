@@ -3,7 +3,7 @@ function editPage() {
      var form = div.querySelector("#edit-form-temp");     
      var info = div.querySelector("#info-wrapper");
      var title = div.querySelector("#main-title");
-     div.appendChild(form.content);
+     div.append(form.content.cloneNode(true));
      var formChildren = div.querySelector("#edit-form form").children;
      var i;
      for (i = 0; i < formChildren.length; i++) {
@@ -34,6 +34,5 @@ function cancelEdit() {
      var form = div.querySelector("#edit-form");
      info.removeAttribute("class");
      title.setAttribute("class", "title");
-     formTemplate.appendChild(form);
      form.remove();
 }
