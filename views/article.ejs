@@ -14,31 +14,35 @@
           <%- include ("partials/menu.ejs")%> <!--Put the menu first as otherwise the jump to active doesnt always work?-->
           <%- include ("partials/header.ejs")%>
           <div id = "content-wrapper">
-               <template id = "edit-form">
-                    <form method = "post">
-                         <label for = "name">Name</label>
-                         <input type = "text" id = "name" name = "name">
-                         <label for = "image">Image Link</label>
-                         <input type = "text" id = "image" name = "image">
-                         <label for = "owner">Owner</label>
-                         <input type = "text" id = "owner" name = "owner">
-                         <label for = "animalType">Animal Type</label>
-                         <input type = "text" id = "animalType" name = "animalType">
-                         <label for = "nameOrigin">Name Origin</label>
-                         <textarea id = "nameOrigin" name = "nameOrigin"></textarea>
-                         <label for = "origin">Origin</label>
-                         <textarea id = "origin" name = "origin"></textarea>
-                         <label for = "otherNotes">Other Notes</label>
-                         <textarea id = "otherNotes" name = "otherNotes"></textarea>
-                         <input type = "submit" value = "Submit Edits" id = "submit">
-                    </form>
+               <template id = "edit-form-temp">
+                    <div id = "edit-form">
+                         <form method = "post">
+                              <label for = "name-input">Name*</label>
+                              <input type = "text" id = "name-input" name = "name">
+                              <label for = "image-input">Image Link*</label>
+                              <input type = "text" id = "image-input" name = "image">
+                              <label for = "owner-input">Owner*</label>
+                              <input type = "text" id = "owner-input" name = "owner">
+                              <label for = "animalType-input">Animal Type*</label>
+                              <input type = "text" id = "animalType-input" name = "animalType">
+                              <label for = "nameOrigin-input">Name Origin</label>
+                              <textarea id = "nameOrigin-input" name = "nameOrigin"></textarea>
+                              <label for = "origin-input">Origin</label>
+                              <textarea id = "origin-input" name = "origin"></textarea>
+                              <label for = "otherNotes-input">Other Notes</label>
+                              <textarea id = "otherNotes-input" name = "otherNotes"></textarea>
+                              <input type = "submit" value = "Submit Edits" id = "submit">
+                              <button onclick = "cancelEdit()">Cancel</button>
+                         </form>
+                         <p id = "form-disclaimer">* indicates a required field</p>
+                    </div>
                </template>
                <div class = "title" id = "main-title">
                     <h1><%=selectedStuffy.name%></h1>
                     <button onclick = "editPage()">Edit</button>
                </div>
                <div id = "info-wrapper">
-                    <div id ="image">
+                    <div id ="image-div">
                          <img src="<%=selectedStuffy.image%>" class = "thumbnail">
                     </div>
                     <!--div class = "basic-info">
@@ -46,35 +50,31 @@
                          <p><b>Owner:</b> <%=selectedStuffy.owner%></p>
                     </div-->
                     <div id = "paragraphs">
-                         <div id = "owner"> 
-                              <div class = "title">
-                                   <h2>Owner</h2>
-                              </div>
-                              <p><%=selectedStuffy.owner%></p>
+                         <div class = "title">
+                              <h2>Owner</h2>
                          </div>
-                         <div id = "animal-type"> 
-                              <div class = "title">
-                                   <h2>Animal Type</h2>
-                              </div>
-                              <p><%=selectedStuffy.animal_type%></p>
+                         <p id = "owner"><%=selectedStuffy.owner%></p>
+                         <div class = "title">
+                              <h2>Animal Type</h2>
                          </div>
+                         <p id = "animalType"><%=selectedStuffy.animal_type%></p>
                          <% if (selectedStuffy.name_origin !== null) {%>
                               <div class = "title">
                                    <h2>Name Origin</h2>
                               </div>
-                              <p><%=selectedStuffy.name_origin%></p>
+                              <p id = "nameOrigin"><%=selectedStuffy.name_origin%></p>
                          <% }%>
                          <% if (selectedStuffy.origin !== null) {%>
                               <div class = "title">
                                    <h2>Origin</h2>
                               </div>
-                              <p><%=selectedStuffy.origin%></p>
+                              <p id = "origin"><%=selectedStuffy.origin%></p>
                          <% }%>
                          <% if (selectedStuffy.other_notes !== null) {%>
                               <div class = "title">
                                    <h2>Other Notes</h2>
                               </div>
-                              <p><%=selectedStuffy.other_notes%></p>
+                              <p id = "otherNotes"><%=selectedStuffy.other_notes%></p>
                          <% }%>
                     </div>
                </div>

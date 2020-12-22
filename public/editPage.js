@@ -1,23 +1,39 @@
 function editPage() {
-     var form = document.querySelector("#content-wrapper #edit-form");     
-     var info = document.querySelector("#content-wrapper #info-wrapper");
-     var title = document.querySelector("#content-wrapper #main-title");
      var div = document.querySelector("#content-wrapper");
+     var form = div.querySelector("#edit-form-temp");     
+     var info = div.querySelector("#info-wrapper");
+     var title = div.querySelector("#main-title");
      div.appendChild(form.content);
-     var formChildren = div.querySelector("form").children;
-     var paragraphs = info.querySelector("#paragraphs").children;
+     var formChildren = div.querySelector("#edit-form form").children;
      var i;
-     for (i = 0; i < 2; i++) {
-          if (formChildren[i].id === "name-input") {
+     for (i = 0; i < formChildren.length; i++) {
+          if (formChildren[i].name === "name") {
                formChildren[i].value = title.querySelector("h1").innerHTML;
           }
-          else if (formChildren[i].id === "image-input") {
-               formChildren[i].value = info.querySelector("#image img").getAttribute("src");
+          else if (formChildren[i].name === "image") {
+               formChildren[i].value = info.querySelector("#image-div img").src;
           }
           else {
-               
+               try {
+                    formChildren[i].value = info.querySelector(("#paragraphs #").concat(formChildren[i].name)).innerHTML;
+               }
+               catch {
+                    continue
+               }
           }
      }
-     info.remove();
-     title.remove();
+     info.setAttribute("class", "hidden");
+     title.setAttribute("class", "hidden");
+}
+
+function cancelEdit() {
+     var div = document.querySelector("#content-wrapper");
+     var formTemplate = div.querySelector("#edit-form-temp");  
+     var info = div.querySelector("#info-wrapper");
+     var title = div.querySelector("#main-title");
+     var form = div.querySelector("#edit-form");
+     info.removeAttribute("class");
+     title.setAttribute("class", "title");
+     formTemplate.appendChild(form);
+     form.remove();
 }
