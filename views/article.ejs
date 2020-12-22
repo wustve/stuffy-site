@@ -15,21 +15,21 @@
           <%- include ("partials/header.ejs")%>
           <div id = "content-wrapper">
                <template id = "edit-form">
-                    <form>
+                    <form method = "post">
                          <label for = "name">Name</label>
-                         <input type = "text" id = "name-input">
+                         <input type = "text" id = "name" name = "name">
                          <label for = "image">Image Link</label>
-                         <input type = "text" id = "image-input">
+                         <input type = "text" id = "image" name = "image">
                          <label for = "owner">Owner</label>
-                         <input type = "text" id = "owner-input">
-                         <label for = "animal-type">Animal Type</label>
-                         <input type = "text" id = "animal-type-input">
-                         <label for = "name-origin">Name Origin</label>
-                         <textarea id = "name-origin-input"></textarea>
+                         <input type = "text" id = "owner" name = "owner">
+                         <label for = "animalType">Animal Type</label>
+                         <input type = "text" id = "animalType" name = "animalType">
+                         <label for = "nameOrigin">Name Origin</label>
+                         <textarea id = "nameOrigin" name = "nameOrigin"></textarea>
                          <label for = "origin">Origin</label>
-                         <textarea id = "origin-input"></textarea>
-                         <label for = "other-notes">Other Notes</label>
-                         <textarea id = "other-notes-input"></textarea>
+                         <textarea id = "origin" name = "origin"></textarea>
+                         <label for = "otherNotes">Other Notes</label>
+                         <textarea id = "otherNotes" name = "otherNotes"></textarea>
                          <input type = "submit" value = "Submit Edits" id = "submit">
                     </form>
                </template>

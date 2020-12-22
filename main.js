@@ -4,6 +4,9 @@ const ejs = require('ejs')
 const { DatabaseController } = require("./database")
 var {DateTime} = require('luxon')
 
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }))
+
 require("dotenv").config()
 
 app.set('view engine', 'ejs')
@@ -72,6 +75,12 @@ app.get("/:stuffyName/:stuffyType", async function(req, res) {
      else {
           res.render("error.ejs")
      }
+})
+
+app.post("/:stuffyName/:stuffyType", async (req, res) => {
+     var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
+     var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, req.params.stuffyName, req.params.stuffyType]
+     await new DatabaseController(process.env.DATABASE_URL).command(query, values)
 })
 
 app.get("*", function(req, res) {
