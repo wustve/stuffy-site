@@ -80,7 +80,9 @@ app.get("/:stuffyName/:stuffyType", async function (req, res) {
 
 app.post("/:stuffyName/:stuffyType", async (req, res) => {
      var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
-     var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, req.params.stuffyName, req.params.stuffyType]
+     const originalName = req.params.stuffyName.replace(/_/g, ' ')
+     const originalType = req.params.stuffyType.replace(/_/g, ' ')
+     var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
      await new DatabaseController(process.env.DATABASE_URL).command(query, values)
      res.redirect('back')
 })
