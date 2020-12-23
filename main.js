@@ -4,9 +4,12 @@ const ejs = require('ejs')
 const { DatabaseController } = require("./database")
 var { DateTime } = require('luxon')
 const { body, validationResult } = require('express-validator')
+const basic = require('./router/basic')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
+
+app.use('/', basic)
 
 require("dotenv").config()
 
@@ -14,7 +17,7 @@ app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'))
 
-function stuffyOfTheDay(stuffies) {
+/*function stuffyOfTheDay(stuffies) {
      let stevenStuffies = []
      let monicaStuffies = []
      const anchorDateSteven = DateTime.fromISO('2020-08-22', { zone: 'America/Toronto' })
@@ -86,7 +89,7 @@ app.get("/:stuffyName/:stuffyType", async function (req, res) {
      else {
           res.render("error.ejs")
      }
-})
+})*/
 
 app.post("/:stuffyName/:stuffyType", async (req, res) => {
      var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
