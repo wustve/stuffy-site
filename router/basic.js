@@ -28,7 +28,7 @@ function stuffyOfTheDay(stuffies) {
 
 router.use(async (req, res, next) => {
      try {
-          var menuResult = await new DatabaseController(process.env.DATABASE_URL).menuResult();
+          var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
           let stevenStuffy, monicaStuffy;
           [stevenStuffy, monicaStuffy] = stuffyOfTheDay(menuResult);
           var pageInfo = {
@@ -42,7 +42,18 @@ router.use(async (req, res, next) => {
           console.log("ERROR: Something went wrong retrieving items from the db");
      }  
      next();
-});
+})
+
+router.get('/', async (req, res) => {
+     try {
+          let homeResult = res.locals.pageInfo
+          res.render("homepage.ejs", homeResult)
+     }
+     catch (err) {
+          console.log(err.message)
+          res.render("error.ejs")
+     }
+})
 
 router.get('/login', async (req, res) => {
      if (res.locals.pageInfo) {
