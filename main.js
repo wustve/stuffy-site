@@ -36,18 +36,17 @@ function stuffyOfTheDay(stuffies) {
 }
 
 
-
 app.get('/', async (req, res) => {
-     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
+     var homeResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
 
      try {
           let stevenStuffy, monicaStuffy
-          [stevenStuffy, monicaStuffy] = stuffyOfTheDay(menuResult)
+          [stevenStuffy, monicaStuffy] = stuffyOfTheDay(homeResult)
           res.render("homepage.ejs", {
                stevenStuffy: stevenStuffy,
                monicaStuffy: monicaStuffy,
                //stuffies: [monicaStuffy.name, stevenStuffy.name], 
-               options: menuResult.rows
+               options: homeResult.rows
           })
      }
      catch (err) {
@@ -56,10 +55,21 @@ app.get('/', async (req, res) => {
      }
 })
 
+app.get('/login', async (req, res) => {
+     var menuResult = await new DatabaseController(process.env.DATABASE_URL).menuResult()
+     let stevenStuffy, monicaStuffy
+     [stevenStuffy, monicaStuffy] = stuffyOfTheDay(menuResult)
+     res.render("login.ejs", {
+          stevenStuffy: stevenStuffy,
+          monicaStuffy: monicaStuffy,
+          options: menuResult.rows
+     })
+})
+
 app.get("/:stuffyName/:stuffyType", async function (req, res) {
      console.log(req.params.stuffyName)
      console.log(req.params.stuffyType)
-     var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type,owner FROM stuffies ORDER BY name, animal_type ASC;')
+     var menuResult = await new DatabaseController(process.env.DATABASE_URL).menuResult()
      var dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g, ' '), req.params.stuffyType])
 
      console.log(dbResult)

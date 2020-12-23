@@ -25,6 +25,9 @@ class DatabaseController {
                this.client.end()
           }
      }
+     async menuResult(){
+          return this.command('Select name, animal_type,owner FROM stuffies ORDER BY name, animal_type ASC;')
+     }
 }
 
 exports.DatabaseController = DatabaseController
