@@ -38,14 +38,19 @@ function cancelEdit() {
 
 
 $(document).ready(function(){
-     $("#submit").submit(function(){
-          $.ajax({
-               url: $(location).attr('href'),
-               method: "POST",
-               data: $('form').serialize(),
-               success: function(response){
-                    console.log(response)
-               }
+     console.log("ready!")
+     $("#edit").click(function() {
+          $("#edit-form form").submit(function(event){
+               event.preventDefault();
+               console.log("submit!")
+               $.ajax({
+                    url: $(location).attr('href'),
+                    method: "POST",
+                    data: $('form').serialize(),
+                    success: function(response){
+                         console.log(response)
+                    }
+               })
           })
-     })
+     });
 })
