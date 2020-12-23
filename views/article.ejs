@@ -15,27 +15,7 @@
           <%- include ("partials/header.ejs")%>
           <div id = "content-wrapper">
                <template id = "edit-form-temp">
-                    <div id = "edit-form">
-                         <form method = "post">
-                              <label for = "name-input">Name*</label>
-                              <input type = "text" id = "name-input" name = "name" required = true>
-                              <label for = "image-input">Image Link*</label>
-                              <input type = "text" id = "image-input" name = "image" required = true>
-                              <label for = "owner-input">Owner*</label>
-                              <input type = "text" id = "owner-input" name = "owner" required = true>
-                              <label for = "animalType-input">Animal Type*</label>
-                              <input type = "text" id = "animalType-input" name = "animalType" required = true>
-                              <label for = "nameOrigin-input">Name Origin</label>
-                              <textarea id = "nameOrigin-input" name = "nameOrigin"></textarea>
-                              <label for = "origin-input">Origin</label>
-                              <textarea id = "origin-input" name = "origin"></textarea>
-                              <label for = "otherNotes-input">Other Notes</label>
-                              <textarea id = "otherNotes-input" name = "otherNotes"></textarea>
-                              <input type = "submit" value = "Submit Edits" id = "submit">
-                              <button onclick = "cancelEdit()">Cancel</button>
-                         </form>
-                         <p id = "form-disclaimer">* indicates a required field</p>
-                    </div>
+                    <%- include ("partials/stuffy_form.ejs")%>
                </template>
                <div class = "title" id = "main-title">
                     <h1><%=selectedStuffy.name%></h1>
