@@ -38,14 +38,6 @@ input {
      width: 30%;
 }
 
-textarea {
-     display: block;
-     margin: 5px;
-     margin-left: 0px;
-     width: 70%;
-     height: 20%;
-}
-
 .title {
      border-bottom-color: var(--border-colour);
      border-bottom-width: 1px;
