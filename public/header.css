@@ -15,8 +15,6 @@
 #login-housing{
      flex:1;
      padding-right: 2vh;
-     width: 10vh;
-     height: 5vh;
      display: flex;
 }
 
@@ -38,8 +36,6 @@
 #toggle-housing{
      flex:1;
      padding: 1vh;
-     width: 10vh;
-     height: 5vh;
 }
 
 .toggle {
