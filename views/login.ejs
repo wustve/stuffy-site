@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html colour-mode = "dark">
+     <script src = "../retrieveColourMode.js"></script>
+     <head>
+          <link rel = 'stylesheet' type = 'text/css' href = '/hideFOUC.css'>
+          <title>Stuffy Site Login</title>
+          <link rel = "stylesheet" type = "text/css" href = "../article.css">
+          <link rel = "stylesheet" type = "text/css" href = "../colourmode.css">
+          <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
+          <link href="https://fonts.googleapis.com/css2?family=Assistant&display=swap" rel="stylesheet"> 
+     </head>
+     <body onload = "setCheckboxColourMode()">
+          <%- include ("partials/menu.ejs")%> <!--Put the menu first as otherwise the jump to active doesnt always work?-->
+          <%- include ("partials/header.ejs")%>
+          <h1>Login!</h1>
+          <p>Only one admin account exists, so if you don't have access to it, you don't really need to be on this page at all.</p>
+          <form>
+               <label for = "username">Username</label>
+               <input type = "text" id = "username" name = "username">
+               <label for = "password">Password</label>
+               <input type = "text" id = "password" name = "password">
+          </form>
+          <link rel = 'stylesheet' type = 'text/css' href = '/showContent.css'>
+     </body>
+</html>

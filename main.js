@@ -87,6 +87,10 @@ app.post("/:stuffyName/:stuffyType", async (req, res) => {
      res.redirect('back')
 })
 
+app.get("/login", function (req, res) {
+     res.render("login.ejs")
+})
+
 app.get("*", function (req, res) {
      res.render("error.ejs")
 })
