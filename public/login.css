@@ -10,7 +10,12 @@ form {
     border-color: rgb(119, 119, 119);
 }
 
+<<<<<<< HEAD
+body{
+    background-color: var(--main-bg-colour);
+=======
 body {
      background-color: var(--main-bg-colour);
      color: var(--text-colour);
+>>>>>>> 8d10188aba26b7684c3c14081e1a61dab79105db
 }

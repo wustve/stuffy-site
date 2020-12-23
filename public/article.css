@@ -18,9 +18,16 @@ h2 {
      font-family: 'Merriweather', serif;
 }
 
-button {
+#edit {
      display: inline-block;
-     margin-bottom: 5px;
+     background-color: var(--main-bg-colour);
+     padding:0;
+     color: blue;
+     border:none;
+}
+
+#edit:hover{
+     background-color: var(--hover-colour);
 }
 
 p {
@@ -31,17 +38,32 @@ form {
      margin: 10px;
 }
 
-input {
+input , form button{
      display: block;
      margin: 5px;
      margin-left: 0px;
      width: 30%;
+     color: var(--text-colour);
+     background-color: var(--main-bg-colour);
+     border-color: var(--border-colour);
 }
+
 
 .title {
      border-bottom-color: var(--border-colour);
      border-bottom-width: 1px;
      border-bottom-style: solid;
+}
+
+textarea {
+     display: block;
+     margin: 5px;
+     margin-left: 0px;
+     width: 70%;
+     height: 20%;
+     color: var(--text-colour);
+     background-color: var(--main-bg-colour);
+     border-color: var(--border-colour)
 }
 
 .hidden {
@@ -50,12 +72,6 @@ input {
 
 #image-div {
      margin-top: 1%;
-}
-
-.basic-info {
-     background-color: var(--element-colour);
-     padding: 1%;
-     margin-left: 2%
 }
 
 #info-wrapper {
@@ -84,7 +100,7 @@ input {
      border-color: rgb(119, 119, 119);
 }
 
-#submit {
+#submit , form button{
      width: auto;
 }
 
@@ -92,4 +108,5 @@ input {
      margin-left: 10px;
      font-size: 0.75em;
 }
+
 
