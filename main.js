@@ -91,7 +91,19 @@ app.get("/:stuffyName/:stuffyType", async function (req, res) {
      }
 })*/
 
-app.post("/:stuffyName/:stuffyType", async (req, res) => {
+app.post("/:stuffyName/:stuffyType", [
+     body('name').not().isEmpty(),
+     body('animaType').not().isEmpty(),
+     body('owner').not().isEmpty(),
+     body('image').not().isEmpty(),
+],async (req, res) => {
+
+     const errors = validationResult(req)
+
+     if(!errors.isEmpty()){
+          return res.send('Invalid Fields')
+     }
+
      var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
      const originalName = req.params.stuffyName.replace(/_/g, ' ')
      const originalType = req.params.stuffyType.replace(/_/g, ' ')

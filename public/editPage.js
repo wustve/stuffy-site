@@ -35,3 +35,17 @@ function cancelEdit() {
      title.setAttribute("class", "title");
      form.remove();
 }
+
+
+$(document).ready(function(){
+     $("#submit").submit(function(){
+          $.ajax({
+               url: $(location).attr('href'),
+               method: "POST",
+               data: $('form').serialize(),
+               success: function(response){
+                    console.log(response)
+               }
+          })
+     })
+})

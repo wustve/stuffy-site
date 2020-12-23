@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html colour-mode = "dark">
-     <script src = "../retrieveColourMode.js"></script> 
-     <script src = "../editPage.js"></script> 
+     
      <head>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script src = "../retrieveColourMode.js"></script> 
+          <script src = "../editPage.js"></script> 
           <link rel = 'stylesheet' type = 'text/css' href = '/hideFOUC.css'>
           <title>Stuffy Site: <%=selectedStuffy.name%></title>
           <link rel = "stylesheet" type = "text/css" href = "../article.css">
           <link rel = "stylesheet" type = "text/css" href = "../colourmode.css">
           <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
           <link href="https://fonts.googleapis.com/css2?family=Assistant&display=swap" rel="stylesheet"> 
+          
      </head>
      <body onload = "setCheckboxColourMode()">
           <%- include ("partials/menu.ejs")%> <!--Put the menu first as otherwise the jump to active doesnt always work?-->
