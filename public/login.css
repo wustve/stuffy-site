@@ -1,0 +1,14 @@
+input{
+    display: block;
+}
+
+
+form {
+    width: 88%;
+    margin-left: 10%;
+    padding-left: 1%;
+    border-color: rgb(119, 119, 119);
+}
+body{
+    background-color: var(--main-bg-colour);
+}
