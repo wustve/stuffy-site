@@ -93,12 +93,14 @@ app.get("/:stuffyName/:stuffyType", async function (req, res) {
 
 app.post("/:stuffyName/:stuffyType", [
      body('name').not().isEmpty(),
-     body('animaType').not().isEmpty(),
+     body('animalType').not().isEmpty(),
      body('owner').not().isEmpty(),
      body('image').not().isEmpty(),
+     body('image').isURL(),
 ],async (req, res) => {
 
      const errors = validationResult(req)
+     console.log(errors)
 
      if(!errors.isEmpty()){
           return res.send('Invalid Fields')
@@ -109,7 +111,7 @@ app.post("/:stuffyName/:stuffyType", [
      const originalType = req.params.stuffyType.replace(/_/g, ' ')
      var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
      await new DatabaseController(process.env.DATABASE_URL).command(query, values)
-     res.redirect('back')
+     res.send('Success')
 })
 
 app.get("*", function (req, res) {

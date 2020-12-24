@@ -48,7 +48,10 @@ $(document).ready(function(){
                     method: "POST",
                     data: $('form').serialize(),
                     success: function(response){
-                         console.log(response)
+                         $('#status').text(response)
+                         if (response == "Success"){
+                              location.reload()
+                         }
                     }
                })
           })
