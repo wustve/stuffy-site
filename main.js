@@ -117,7 +117,7 @@ app.post("/:stuffyName/:stuffyType", [
      if (await isInvalid(req)) {
           return res.send('Invalid Fields')
      }
-     if (req.session.userId === "admin") {
+     if (req.session.canEdit) {
           var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
           const originalName = req.params.stuffyName.replace(/_/g, ' ')
           const originalType = req.params.stuffyType.replace(/_/g, ' ')
@@ -139,7 +139,7 @@ app.post("/login", [
      }
 
      if (req.body.username === process.env.ADMIN_USERNAME && req.body.password === process.env.ADMIN_PASSWORD) {
-          req.session.userId = "admin"
+          req.session.canEdit = true
           return res.status(200).send('Success')
      }
      else {
