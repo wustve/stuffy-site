@@ -5,6 +5,7 @@
      --hover-colour: rgb(160, 160, 160);
      --border-colour: rgb(20, 20, 20);
      --text-colour: black;
+     --edit-button: rgb(30, 120, 190);
 }
 
 :root[colour-mode = "dark"] {
@@ -14,4 +15,5 @@
      --hover-colour: rgb(80, 80, 80);
      --border-colour: rgb(220, 220, 220);
      --text-colour: whitesmoke;
+     --edit-button: rgb(145, 190, 220);
 }

@@ -22,7 +22,7 @@ h2 {
      display: inline-block;
      background-color: var(--main-bg-colour);
      padding:0;
-     color: blue;
+     color: var(--edit-button);
      border:none;
 }
 
