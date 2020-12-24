@@ -3,27 +3,23 @@
      <input type = 'text' id = 'searchBar' onkeyup = 'filter()' placeholder = 'Search' title= 'Enter a stuffy'>
      <script src = '/search.js'></script>
      <div id= 'selection'>
-          <% try {%>
-               <% if (selectedStuffy.name && selectedStuffy.animal_type) {%>
-                    <a href = '/'>Home</a>
-                    <% for (let i = 0; i < options.length; i++){%>
-                         <% para = '/' + options[i].name.split(' ').join('_')%>
-                         <% para = para + '/'+options[i].animal_type%>
-                         <% label = options[i].name+' ('+ options[i].animal_type +')'%>
-                         <!--% scroll = options[i].name+'('+ options[i].animal_type +')'%-->
-                         <% if (label === selectedStuffy.name + ' (' + selectedStuffy.animal_type + ')') {%>
-                              <a href = "<%=para + '#active'%>" id = "active"><%=label%></a>
-                         <%} else {%>
-                              <a href = "<%=para + '#active'%>"><%=label%></a>
-                         <%}%>
-                    <%}%>
-               <%}%>
-          <%} catch {%>
+          <% if (typeof selectedStuffy !== "undefined") {%>
+               <a href = '/'>Home</a>
+          <%} else {%>
                <a href = '/' id = 'active'>Home</a>
-               <% for (let i = 0; i < options.length; i++){%>
-                    <% para = '/' + options[i].name.split(' ').join('_')%>
-                    <% para = para + '/'+options[i].animal_type%>
-                    <% label = options[i].name+' ('+ options[i].animal_type +')'%>
+          <%}%>
+          <% for (let i = 0; i < options.length; i++){%>
+               
+               <% para = '/' + options[i].name.split(' ').join('_')%>
+               <% para = para + '/'+options[i].animal_type%>
+               <% label = options[i].name+' ('+ options[i].animal_type +')'%>
+               <% try {%>
+                    <% if (label === selectedStuffy.name + ' (' + selectedStuffy.animal_type + ')') {%>
+                         <a href = "<%=para + '#active'%>" id = "active"><%=label%></a>
+                    <%} else {%>
+                         <a href = "<%=para + '#active'%>"><%=label%></a>
+                    <%}%>
+               <%} catch {%>
                     <a href = "<%=para + '#active'%>"><%=label%></a>
                <%}%>
           <%}%>

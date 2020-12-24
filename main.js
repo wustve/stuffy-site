@@ -15,7 +15,7 @@ async function menuRetrieve() {
      try {
           var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
           let stevenStuffy, monicaStuffy;
-          [stevenStuffy, monicaStuffy] = stuffyOfTheDay(menuResult);
+          [stevenStuffy, monicaStuffy] = await stuffyOfTheDay(menuResult);
           return  { 
                stevenStuffy: stevenStuffy,
                monicaStuffy: monicaStuffy,
@@ -33,7 +33,7 @@ app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'))
 
-function stuffyOfTheDay(stuffies) {
+async function stuffyOfTheDay(stuffies) {
      let stevenStuffies = []
      let monicaStuffies = []
      const anchorDateSteven = DateTime.fromISO('2020-08-22', { zone: 'America/Toronto' })
