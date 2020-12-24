@@ -16,7 +16,7 @@ async function menuRetrieve() {
           var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
           let stevenStuffy, monicaStuffy;
           [stevenStuffy, monicaStuffy] = await stuffyOfTheDay(menuResult);
-          return  { 
+          return {
                stevenStuffy: stevenStuffy,
                monicaStuffy: monicaStuffy,
                options: menuResult.rows
@@ -31,7 +31,7 @@ require("dotenv").config()
 
 app.set('view engine', 'ejs')
 
-app.use(express.static(__dirname + '/public'))
+app.use(express.static('public'))
 
 async function stuffyOfTheDay(stuffies) {
      let stevenStuffies = []
@@ -68,7 +68,7 @@ app.get('/', async (req, res) => {
 
 app.get('/login', async (req, res) => {
      try {
-          res.render ("login.ejs", await menuRetrieve());
+          res.render("login.ejs", await menuRetrieve());
      }
      catch (err) {
           res.render("error.ejs")
@@ -90,17 +90,24 @@ app.get("/:stuffyName/:stuffyType", async function (req, res) {
 })
 
 app.post("/:stuffyName/:stuffyType", [
-     body('name').not().isEmpty(),
-     body('animalType').not().isEmpty(),
-     body('owner').not().isEmpty(),
-     body('image').not().isEmpty(),
-     body('image').isURL(),
-],async (req, res) => {
+     body('name')
+          .trim()
+          .not().isEmpty(),
+     body('animalType')
+          .trim()
+          .not().isEmpty(),
+     body('owner')
+          .trim()
+          .not().isEmpty(),
+     body('image')
+          .trim()
+          .not().isEmpty()
+          .isURL(),
+], async (req, res) => {
 
      const errors = validationResult(req)
-     console.log(errors)
 
-     if(!errors.isEmpty()){
+     if (!errors.isEmpty()) {
           return res.send('Invalid Fields')
      }
 
