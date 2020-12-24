@@ -4,12 +4,25 @@ const ejs = require('ejs')
 const { DatabaseController } = require("./database")
 var { DateTime } = require('luxon')
 const { body, validationResult } = require('express-validator')
+const session = require('express-session')
 //const basic = require('./router/basic')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
 //app.use('/', basic)
+
+require("dotenv").config()
+
+app.set('view engine', 'ejs')
+
+app.use(express.static(__dirname + '/public'))
+
+app.use(session({
+     secret : process.env.SECRET,
+     resave : true,
+     saveUninitialized: false
+}))
 
 async function menuRetrieve() {
      try {
@@ -26,12 +39,6 @@ async function menuRetrieve() {
           console.log("ERROR: Something went wrong retrieving items from the db");
      }
 }
-
-require("dotenv").config()
-
-app.set('view engine', 'ejs')
-
-app.use(express.static(__dirname + '/public'))
 
 async function stuffyOfTheDay(stuffies) {
      let stevenStuffies = []
@@ -54,7 +61,18 @@ async function stuffyOfTheDay(stuffies) {
      return [stevenStuffy, monicaStuffy]
 }
 
+async function isInvalid(req) {
+     
+     const errors = validationResult(req)
+     console.log(errors)
 
+     if(errors.isEmpty()){
+          return false;
+     }
+     else {
+          return true;
+     }
+}
 
 app.get('/', async (req, res) => {
      try {
@@ -96,20 +114,37 @@ app.post("/:stuffyName/:stuffyType", [
      body('image').not().isEmpty(),
      body('image').isURL(),
 ],async (req, res) => {
+     if (await isInvalid(req)) {
+          return res.send('Invalid Fields')
+     }
+     if (req.session.userId === "admin") {
+          var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
+          const originalName = req.params.stuffyName.replace(/_/g, ' ')
+          const originalType = req.params.stuffyType.replace(/_/g, ' ')
+          var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
+          await new DatabaseController(process.env.DATABASE_URL).command(query, values)
+          res.send('Success')
+     }
+     else {
+          res.send('You are not permitted to edit this page sorry!')
+     }
+})
 
-     const errors = validationResult(req)
-     console.log(errors)
-
-     if(!errors.isEmpty()){
+app.post("/login", [
+     body("username").not().isEmpty(),
+     body("password").not().isEmpty()
+], async (req, res) => {
+     if (await isInvalid(req)) {
           return res.send('Invalid Fields')
      }
 
-     var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
-     const originalName = req.params.stuffyName.replace(/_/g, ' ')
-     const originalType = req.params.stuffyType.replace(/_/g, ' ')
-     var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
-     await new DatabaseController(process.env.DATABASE_URL).command(query, values)
-     res.send('Success')
+     if (req.body.username === process.env.ADMIN_USERNAME && req.body.password === process.env.ADMIN_PASSWORD) {
+          req.session.userId = "admin"
+          return res.status(200).send('Success')
+     }
+     else {
+          return res.status(400).send('Invalid Username or Password')
+     }
 })
 
 app.get("*", function (req, res) {
