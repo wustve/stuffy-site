@@ -1,5 +1,10 @@
 input {
     display: block;
+     margin: 5px;
+     margin-left: 0px;
+     color: var(--text-colour);
+     background-color: var(--main-bg-colour);
+     border-color: var(--border-colour);
 }
 
 form {

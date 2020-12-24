@@ -110,3 +110,7 @@ textarea {
 }
 
 
+.required:after {
+     content:" *";
+     color: red;
+   }
