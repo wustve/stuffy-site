@@ -4,12 +4,30 @@ const ejs = require('ejs')
 const { DatabaseController } = require("./database")
 var { DateTime } = require('luxon')
 const { body, validationResult } = require('express-validator')
-const basic = require('./router/basic')
+//const basic = require('./router/basic')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use('/', basic)
+//app.use('/', basic)
+
+app.use(async (req, res, next) => {
+     try {
+          var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
+          let stevenStuffy, monicaStuffy;
+          [stevenStuffy, monicaStuffy] = stuffyOfTheDay(menuResult);
+          var pageInfo = {
+               stevenStuffy: stevenStuffy,
+               monicaStuffy: monicaStuffy,
+               options: menuResult.rows
+          }
+          res.locals.pageInfo = pageInfo
+     }
+     catch {
+          console.log("ERROR: Something went wrong retrieving items from the db");
+     }  
+     next();
+})
 
 require("dotenv").config()
 
@@ -17,7 +35,7 @@ app.set('view engine', 'ejs')
 
 app.use(express.static(__dirname + '/public'))
 
-/*function stuffyOfTheDay(stuffies) {
+function stuffyOfTheDay(stuffies) {
      let stevenStuffies = []
      let monicaStuffies = []
      const anchorDateSteven = DateTime.fromISO('2020-08-22', { zone: 'America/Toronto' })
@@ -39,18 +57,10 @@ app.use(express.static(__dirname + '/public'))
 }
 
 
-app.get('/', async (req, res) => {
-     var homeResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
 
+app.get('/', async (req, res) => {
      try {
-          let stevenStuffy, monicaStuffy
-          [stevenStuffy, monicaStuffy] = stuffyOfTheDay(homeResult)
-          res.render("homepage.ejs", {
-               stevenStuffy: stevenStuffy,
-               monicaStuffy: monicaStuffy,
-               //stuffies: [monicaStuffy.name, stevenStuffy.name], 
-               options: homeResult.rows
-          })
+          res.render("homepage.ejs", res.locals.pageInfo)
      }
      catch (err) {
           console.log(err.message)
@@ -59,37 +69,27 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/login', async (req, res) => {
-     var menuResult = await new DatabaseController(process.env.DATABASE_URL).menuResult()
-     let stevenStuffy, monicaStuffy
-     [stevenStuffy, monicaStuffy] = stuffyOfTheDay(menuResult)
-     res.render("login.ejs", {
-          stevenStuffy: stevenStuffy,
-          monicaStuffy: monicaStuffy,
-          options: menuResult.rows
-     })
+     if (res.locals.pageInfo) {
+          res.render ("login.ejs", res.locals.pageInfo);
+     }
+     else {
+          res.render("error.ejs")
+     }
 })
 
 app.get("/:stuffyName/:stuffyType", async function (req, res) {
      console.log(req.params.stuffyName)
      console.log(req.params.stuffyType)
-     var menuResult = await new DatabaseController(process.env.DATABASE_URL).menuResult()
+     var pageInfo = res.locals.pageInfo
      var dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g, ' '), req.params.stuffyType])
-
-     console.log(dbResult)
      if (dbResult.rowCount > 0) {
-          let stevenStuffy, monicaStuffy
-          [stevenStuffy, monicaStuffy] = stuffyOfTheDay(menuResult)
-          res.render("article.ejs", {
-               stevenStuffy: stevenStuffy,
-               monicaStuffy: monicaStuffy,
-               selectedStuffy: dbResult.rows[0],
-               options: menuResult.rows
-          })
+          pageInfo.selectedStuffy = dbResult.rows[0]
+          res.render("article.ejs", pageInfo)
      }
      else {
           res.render("error.ejs")
      }
-})*/
+})
 
 app.post("/:stuffyName/:stuffyType", [
      body('name').not().isEmpty(),

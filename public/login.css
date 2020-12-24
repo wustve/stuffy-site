@@ -13,4 +13,5 @@ form {
 body {
      background-color: var(--main-bg-colour);
      color: var(--text-colour);
+     margin:0;
 }
