@@ -11,23 +11,21 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 //app.use('/', basic)
 
-app.use(async (req, res, next) => {
+async function menuRetrieve() {
      try {
           var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
           let stevenStuffy, monicaStuffy;
           [stevenStuffy, monicaStuffy] = stuffyOfTheDay(menuResult);
-          var pageInfo = {
+          return  { 
                stevenStuffy: stevenStuffy,
                monicaStuffy: monicaStuffy,
                options: menuResult.rows
           }
-          res.locals.pageInfo = pageInfo
      }
      catch {
           console.log("ERROR: Something went wrong retrieving items from the db");
-     }  
-     next();
-})
+     }
+}
 
 require("dotenv").config()
 
@@ -60,7 +58,7 @@ function stuffyOfTheDay(stuffies) {
 
 app.get('/', async (req, res) => {
      try {
-          res.render("homepage.ejs", res.locals.pageInfo)
+          res.render("homepage.ejs", await menuRetrieve());
      }
      catch (err) {
           console.log(err.message)
@@ -69,10 +67,10 @@ app.get('/', async (req, res) => {
 })
 
 app.get('/login', async (req, res) => {
-     if (res.locals.pageInfo) {
-          res.render ("login.ejs", res.locals.pageInfo);
+     try {
+          res.render ("login.ejs", await menuRetrieve());
      }
-     else {
+     catch (err) {
           res.render("error.ejs")
      }
 })
@@ -80,7 +78,7 @@ app.get('/login', async (req, res) => {
 app.get("/:stuffyName/:stuffyType", async function (req, res) {
      console.log(req.params.stuffyName)
      console.log(req.params.stuffyType)
-     var pageInfo = res.locals.pageInfo
+     var pageInfo = await menuRetrieve()
      var dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g, ' '), req.params.stuffyType])
      if (dbResult.rowCount > 0) {
           pageInfo.selectedStuffy = dbResult.rows[0]
