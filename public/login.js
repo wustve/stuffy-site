@@ -7,7 +7,7 @@ $('document').ready(function(){
             data: $('form').serialize(),
             success: function(response, status){
                 $('#status').text(response)
-                if (status == 200){
+                if (response == "Success"){
                     location.replace("/")
                 }
             }

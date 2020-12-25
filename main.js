@@ -146,19 +146,18 @@ app.post("/login", [
      if (await isInvalid(req)) {
           return res.send('Invalid Fields')
      }
-
      else if (req.body.username === process.env.ADMIN_USERNAME && req.body.password === process.env.ADMIN_PASSWORD) {
           req.session.canEdit = true
-          return res.status(200).send('Success')
+          return res.send('Success')
      }
      else {
-          return res.status(400).send('Invalid Username or Password')
+          return res.send('Invalid Username or Password')
      }
 })
 
 app.get("/logout", async (req, res) =>{
      req.session.canEdit = false
-     res.redirect('back')
+     res.redirect('/')
 })
 
 app.get("*", function (req, res) {
