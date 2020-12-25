@@ -5,8 +5,11 @@ $('document').ready(function(){
             url: $('location').attr('href'),
             method: "POST",
             data: $('form').serialize(),
-            success: function(response){
-                console.log(response)
+            success: function(response, status){
+                $('#status').text(response)
+                if (status == 200){
+                    location.replace("/")
+                }
             }
         })
     })

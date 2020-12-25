@@ -1,7 +1,11 @@
 <link rel = "stylesheet" type = "text/css" href = "../header.css">
 <div id = "header">
      <div id = "login-housing">
-          <a href = '/login' id= 'login'> Login </a>
+          <% if (!session.canEdit){ %>
+               <a href = '/login' id= 'login'>Login </a>
+          <% } else {%>
+               <a href = '/logout' id= 'login'>Logout</a>
+          <%}%>
      </div>
      <a href = <%='/' + stevenStuffy.name.split(' ').join('_') + '/' +stevenStuffy.animal_type +'#active'%>>Steven's stuffy of the day</a>
      <a href = <%='/' + monicaStuffy.name.split(' ').join('_') + '/' +monicaStuffy.animal_type +'#active'%>>Monica's stuffy of the day</a>

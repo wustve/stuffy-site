@@ -24,7 +24,7 @@ app.use(session({
      saveUninitialized: false
 }))
 
-async function menuRetrieve() {
+async function menuRetrieve(req) {
      try {
           var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
           let stevenStuffy, monicaStuffy;
@@ -32,7 +32,8 @@ async function menuRetrieve() {
           return {
                stevenStuffy: stevenStuffy,
                monicaStuffy: monicaStuffy,
-               options: menuResult.rows
+               options: menuResult.rows,
+               session: req.session
           }
      }
      catch {
@@ -76,7 +77,7 @@ async function isInvalid(req) {
 
 app.get('/', async (req, res) => {
      try {
-          res.render("homepage.ejs", await menuRetrieve());
+          res.render("homepage.ejs", await menuRetrieve(req));
      }
      catch (err) {
           console.log(err.message)
@@ -86,7 +87,7 @@ app.get('/', async (req, res) => {
 
 app.get('/login', async (req, res) => {
      try {
-          res.render("login.ejs", await menuRetrieve());
+          res.render("login.ejs", await menuRetrieve(req));
      }
      catch (err) {
           res.render("error.ejs")
@@ -96,7 +97,7 @@ app.get('/login', async (req, res) => {
 app.get("/:stuffyName/:stuffyType", async function (req, res) {
      console.log(req.params.stuffyName)
      console.log(req.params.stuffyType)
-     var pageInfo = await menuRetrieve()
+     var pageInfo = await menuRetrieve(req)
      var dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g, ' '), req.params.stuffyType])
      if (dbResult.rowCount > 0) {
           pageInfo.selectedStuffy = dbResult.rows[0]
@@ -146,13 +147,18 @@ app.post("/login", [
           return res.send('Invalid Fields')
      }
 
-     if (req.body.username === process.env.ADMIN_USERNAME && req.body.password === process.env.ADMIN_PASSWORD) {
+     else if (req.body.username === process.env.ADMIN_USERNAME && req.body.password === process.env.ADMIN_PASSWORD) {
           req.session.canEdit = true
           return res.status(200).send('Success')
      }
      else {
           return res.status(400).send('Invalid Username or Password')
      }
+})
+
+app.get("/logout", async (req, res) =>{
+     req.session.canEdit = false
+     res.redirect('back')
 })
 
 app.get("*", function (req, res) {
