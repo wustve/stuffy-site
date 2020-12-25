@@ -21,6 +21,7 @@ app.use(express.static(__dirname + '/public'))
 app.use(session({
      secret : process.env.SECRET,
      resave : true,
+     samesite: 'lax',
      saveUninitialized: false
 }))
 
