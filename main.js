@@ -45,9 +45,10 @@ async function menuRetrieve(req) {
 async function stuffyOfTheDay(stuffies) {
      let stevenStuffies = []
      let monicaStuffies = []
-     const anchorDateSteven = DateTime.fromISO('2020-08-22', { zone: 'America/Toronto' })
-     const anchorDateMonica = DateTime.fromISO('2020-08-12', { zone: 'America/Toronto' })
-     let currentDate = new Date()
+     const anchorDateSteven = DateTime.fromISO('2020-08-22', { zone: 'UTC' })
+     const anchorDateMonica = DateTime.fromISO('2020-08-12', { zone: 'UTC' })
+     let currentDate = DateTime.local().setZone("America/Toronto")
+     currentDate = currentDate.setZone("UTC", { keepLocalTime: true })
      for (num in stuffies.rows) {
           if (stuffies.rows[num].owner === "Monica") {
                monicaStuffies.push(stuffies.rows[num])
