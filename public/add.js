@@ -1,7 +1,3 @@
-function cancelEdit() {
-     location.replace("/")
-}
-
 $("document").ready(function () {
      $("#edit-form form").submit(function (event) {
           event.preventDefault();

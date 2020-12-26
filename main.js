@@ -122,7 +122,9 @@ app.get('/login', async (req, res) => {
 
 app.get('/add-stuffy', async (req, res) => {
      try {
-          res.render("add.ejs", await menuRetrieve(req));
+          var pageInfo = await menuRetrieve(req)
+          pageInfo.article = false;
+          res.render("add.ejs", pageInfo);
      }
      catch (err) {
           res.render("error.ejs")
@@ -154,6 +156,7 @@ app.get("/:stuffyName/:stuffyType", async function (req, res) {
      var dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g, ' '), req.params.stuffyType.replace(/_/g, ' ')])
      if (dbResult.rowCount > 0) {
           pageInfo.selectedStuffy = dbResult.rows[0]
+          pageInfo.article = true
           res.render("article.ejs", pageInfo)
      }
      else {
