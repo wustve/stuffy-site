@@ -10,7 +10,7 @@
           <%}%>
           <% for (let i = 0; i < options.length; i++){%>
                <% para = '/' + options[i].name.split(' ').join('_')%>
-               <% para = para + '/'+options[i].animal_type%>
+               <% para = para + '/'+options[i].animal_type.split(' ').join('_')%>
                <% label = options[i].name+' ('+ options[i].animal_type +')'%>
                <% try {%>
                     <% if (label === selectedStuffy.name + ' (' + selectedStuffy.animal_type + ')') {%>

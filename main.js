@@ -77,6 +77,30 @@ async function isInvalid(req) {
      }
 }
 
+async function manipulateDatabase(req, res, update) {
+     if (await isInvalid(req)) {
+          return res.send({msg: 'Invalid Fields'})
+     }
+     if (req.session.canEdit) {
+          if (update) {
+               const originalName = req.params.stuffyName.replace(/_/g, ' ')
+               const originalType = req.params.stuffyType.replace(/_/g, ' ')
+               var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
+               var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
+          }
+          else {
+               var query = 'INSERT INTO stuffies (name, animal_type, image, owner, name_origin, origin, other_notes) VALUES ($1, $2, $3, $4, $5, $6, $7)'
+               var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes]
+          }         
+          await new DatabaseController(process.env.DATABASE_URL).command(query, values)
+          const newUrl = "/" + req.body.name.replace(/ /g, '_') + '/' + req.body.animalType.replace(/ /g, '_') + "#active"
+          res.send({msg: 'Success', url: newUrl})
+     }
+     else {
+          res.send({msg: 'You are not permitted to edit this page sorry!'})
+     }
+}
+
 app.get('/', async (req, res) => {
      try {
           res.render("homepage.ejs", await menuRetrieve(req));
@@ -105,7 +129,7 @@ app.get('/add-stuffy', async (req, res) => {
      }
 })
 
-app.post('add-stuffy', [
+app.post('/add-stuffy', [
      body('name')
           .trim()
           .not().isEmpty(),
@@ -120,23 +144,14 @@ app.post('add-stuffy', [
           .not().isEmpty()
           .isURL(),
 ], async(req, res) => {
-     if (await isInvalid(req)) {
-          return res.send('Invalid Fields')
-     }
-     if (req.session.canEdit) {
-          const originalName = req.params.stuffyName.replace(/_/g, ' ')
-          const originalType = req.params.stuffyType.replace(/_/g, ' ')
-     }
-     else {
-          res.send('You are not permitted to edit this page sorry!')
-     }
+     await manipulateDatabase(req, res, false)
 })
 
 app.get("/:stuffyName/:stuffyType", async function (req, res) {
      console.log(req.params.stuffyName)
      console.log(req.params.stuffyType)
      var pageInfo = await menuRetrieve(req)
-     var dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g, ' '), req.params.stuffyType])
+     var dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g, ' '), req.params.stuffyType.replace(/_/g, ' ')])
      if (dbResult.rowCount > 0) {
           pageInfo.selectedStuffy = dbResult.rows[0]
           res.render("article.ejs", pageInfo)
@@ -161,7 +176,7 @@ app.post("/:stuffyName/:stuffyType", [
           .not().isEmpty()
           .isURL(),
 ],async (req, res) => {
-     if (await isInvalid(req)) {
+     /*if (await isInvalid(req)) {
           return res.send({msg: 'Invalid Fields'})
      }
      if (req.session.canEdit) {
@@ -175,7 +190,8 @@ app.post("/:stuffyName/:stuffyType", [
      }
      else {
           res.send({msg: 'You are not permitted to edit this page sorry!'})
-     }
+     }*/
+     await manipulateDatabase(req, res, true)
 })
 
 app.post("/login", [
