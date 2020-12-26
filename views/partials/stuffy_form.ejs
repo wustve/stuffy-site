@@ -16,8 +16,8 @@
           <textarea id = "otherNotes-input" name = "otherNotes"></textarea>
           <div id = 'status'></div>
           <input type = "submit" value = "Submit" id = "submit">
+          <button type = "button" onclick = "cancelEdit()">Cancel</button>
           <% if (article) {%>
-               <button onclick = "cancelEdit()">Cancel</button>
                <button type = "button" id = 'deleteStuffy'>Delete</button>
           <% }%>
      </form>
