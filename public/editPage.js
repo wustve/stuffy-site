@@ -1,6 +1,6 @@
 function editPage() {
      var div = document.querySelector("#content-wrapper");
-     var form = div.querySelector("#edit-form-temp");     
+     var form = div.querySelector("#edit-form-temp");
      var info = div.querySelector("#info-wrapper");
      var title = div.querySelector("#main-title");
      div.append(form.content.cloneNode(true));
@@ -37,20 +37,24 @@ function cancelEdit() {
 }
 
 
-$(document).ready(function(){
+$(document).ready(function () {
      console.log("ready!")
-     $("#edit").click(function() {
-          $("#edit-form form").submit(function(event){
+     $("#edit").click(function () {
+          $("#edit-form form").submit(function (event) {
                event.preventDefault();
                console.log("submit!")
                $.ajax({
                     url: $(location).attr('href'),
                     method: "POST",
                     data: $('form').serialize(),
-                    success: function(response){
-                         $('#status').text(response)
-                         if (response == "Success"){
-                              location.reload()
+                    success: function (response) {
+                         $('#status').text(response.msg)
+                         if (response.msg == "Success") {
+                              if (location.pathname + "#active" == response.url) {
+                                   location.reload()
+                              } else {
+                                   location.replace(response.url)
+                              }
                          }
                     }
                })

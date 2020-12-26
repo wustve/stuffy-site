@@ -126,7 +126,7 @@ app.post("/:stuffyName/:stuffyType", [
           .isURL(),
 ],async (req, res) => {
      if (await isInvalid(req)) {
-          return res.send('Invalid Fields')
+          return res.send({msg: 'Invalid Fields'})
      }
      if (req.session.canEdit) {
           var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
@@ -134,10 +134,11 @@ app.post("/:stuffyName/:stuffyType", [
           const originalType = req.params.stuffyType.replace(/_/g, ' ')
           var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
           await new DatabaseController(process.env.DATABASE_URL).command(query, values)
-          res.send('Success')
+          const newUrl = "/" + req.body.name.replace(' ', /_/g) + '/' + req.body.animalType.replace(' ', /_/g) + "#active"
+          res.send({msg: 'Success', url: newUrl})
      }
      else {
-          res.send('You are not permitted to edit this page sorry!')
+          res.send({msg: 'You are not permitted to edit this page sorry!'})
      }
 })
 
