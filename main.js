@@ -96,6 +96,42 @@ app.get('/login', async (req, res) => {
      }
 })
 
+app.get('/add-stuffy', async (req, res) => {
+     try {
+          res.render("add.ejs", await menuRetrieve(req));
+     }
+     catch (err) {
+          res.render("error.ejs")
+     }
+})
+
+app.post('add-stuffy', [
+     body('name')
+          .trim()
+          .not().isEmpty(),
+     body('animalType')
+          .trim()
+          .not().isEmpty(),
+     body('owner')
+          .trim()
+          .not().isEmpty(),
+     body('image')
+          .trim()
+          .not().isEmpty()
+          .isURL(),
+], async(req, res) => {
+     if (await isInvalid(req)) {
+          return res.send('Invalid Fields')
+     }
+     if (req.session.canEdit) {
+          const originalName = req.params.stuffyName.replace(/_/g, ' ')
+          const originalType = req.params.stuffyType.replace(/_/g, ' ')
+     }
+     else {
+          res.send('You are not permitted to edit this page sorry!')
+     }
+})
+
 app.get("/:stuffyName/:stuffyType", async function (req, res) {
      console.log(req.params.stuffyName)
      console.log(req.params.stuffyType)

@@ -18,6 +18,12 @@
      display: flex;
 }
 
+#add-housing{
+     flex: 1;
+     padding-right: 2vh;
+     display: flex;
+}
+
 #header a{
      background-color: inherit;
      color: var(--text-colour);

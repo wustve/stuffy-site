@@ -1,0 +1,55 @@
+body {
+     background-color: var(--main-bg-colour);
+     margin: 0;
+     color: var(--text-colour);
+}
+
+p {
+     font-size: 1.2em;
+}
+
+form {
+     margin: 10px;
+}
+
+input , form button{
+     display: block;
+     margin: 5px;
+     margin-left: 0px;
+     width: 30%;
+     color: var(--text-colour);
+     background-color: var(--main-bg-colour);
+     border-color: var(--border-colour);
+}
+
+textarea {
+     display: block;
+     margin: 5px;
+     margin-left: 0px;
+     width: 70%;
+     height: 20%;
+     color: var(--text-colour);
+     background-color: var(--main-bg-colour);
+     border-color: var(--border-colour)
+}
+
+#submit , form button{
+     width: auto;
+}
+
+#form-disclaimer {
+     margin-left: 10px;
+     font-size: 0.75em;
+}
+
+#edit-form {
+     width: 88%;
+     margin-left: 10%;
+     padding-left: 1%;
+     border-color: rgb(119, 119, 119);
+}
+
+.required:after {
+     content:" *";
+     color: red;
+   }
