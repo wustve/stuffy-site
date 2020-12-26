@@ -59,5 +59,20 @@ $(document).ready(function () {
                     }
                })
           })
+          $("#deleteStuffy").click(function () {
+               if (confirm("Are you sure you want to delete" + " " + $("h1").text() + " (" + $("#animalType").text() + ")?")) {
+                    $.ajax({
+                         url: $(location).attr('href'),
+                         method: "DELETE",
+                         success: function (response) {
+                              $('#status').text(response)
+                              if (response == "Success"){   
+                                   location.replace('/')
+                              }
+                              
+                         }
+                    })
+               }    
+          })
      });
 })

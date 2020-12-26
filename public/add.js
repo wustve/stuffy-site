@@ -2,7 +2,10 @@ function cancelEdit() {
      location.replace("/")
 }
 
+
+
 $("document").ready(function () {
+     $("#deleteStuffy").remove()
      $("#edit-form form").submit(function (event) {
           event.preventDefault();
           $.ajax({

@@ -5,12 +5,11 @@ const { DatabaseController } = require("./database")
 var { DateTime } = require('luxon')
 const { body, validationResult } = require('express-validator')
 const session = require('express-session')
-//const basic = require('./router/basic')
 
 const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//app.use('/', basic)
+const invalidPermissions = 'You are not permitted to edit, sorry!'
 
 require("dotenv").config()
 
@@ -97,7 +96,7 @@ async function manipulateDatabase(req, res, update) {
           res.send({msg: 'Success', url: newUrl})
      }
      else {
-          res.send({msg: 'You are not permitted to edit this page sorry!'})
+          res.send({msg: invalidPermissions})
      }
 }
 
@@ -213,6 +212,16 @@ app.post("/login", [
 app.get("/logout", async (req, res) =>{
      req.session.canEdit = false
      res.redirect('/')
+})
+
+app.delete("/:stuffyName/:animalType", async (req, res) => {
+     if (req.session.canEdit){
+          const values = [req.params.stuffyName.replace(/_/g, ' '), req.params.animalType.replace(/_/g, ' ')]
+          await new DatabaseController(process.env.DATABASE_URL).command ("DELETE from stuffies where name = $1 AND animal_type = $2", values)
+          res.send("Success")
+     } else{
+          res.send(invalidPermissions)
+     }
 })
 
 app.get("*", function (req, res) {
