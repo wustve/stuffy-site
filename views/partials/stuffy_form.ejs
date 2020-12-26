@@ -16,10 +16,10 @@
           <textarea id = "otherNotes-input" name = "otherNotes"></textarea>
           <div id = 'status'></div>
           <input type = "submit" value = "Submit" id = "submit">
-          <button type = "button" onclick = "cancelEdit()">Cancel</button>
           <% if (article) {%>
                <button type = "button" id = 'deleteStuffy'>Delete</button>
           <% }%>
+          <button type = "button" onclick = "cancelEdit()">Cancel</button>
      </form>
      <p id = "form-disclaimer"><span style = "color: red">*</span> indicates a required field</p>
 </div>
