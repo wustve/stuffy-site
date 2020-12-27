@@ -51,7 +51,6 @@ async function stuffyOfTheDay(stuffies) {
      let monicaStuffies = []
      var anchorDateSteven = await getDate("steven")
      var anchorDateMonica = await getDate("monica")
-     console.log(anchorDateMonica)
      let currentDate = DateTime.local().setZone("America/Toronto")
      currentDate = currentDate.setZone("UTC", { keepLocalTime: true })
      for (num in stuffies.rows) {
@@ -68,8 +67,6 @@ async function stuffyOfTheDay(stuffies) {
      let monicaStuffy = monicaStuffies[dateDifferenceMonica]
      return [stevenStuffy, monicaStuffy]
 }
-
-
 
 async function manipulateDatabase(req, res, update) {
      if (await isInvalid(req)) {
@@ -108,7 +105,6 @@ async function alreadyExists(stuffyName, type){
      const existing = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type FROM stuffies')
      return (existing.rows.some(entry => (entry.name == stuffyName && entry.animal_type == type)))
 }
-
 
 async function isInvalid(req) {
      
@@ -200,7 +196,7 @@ app.post("/:stuffyName/:stuffyType", [
           .trim()
           .not().isEmpty()
           .isURL(),
-],async (req, res) => {
+], async (req, res) => {
      /*if (await isInvalid(req)) {
           return res.send({msg: 'Invalid Fields'})
      }
