@@ -18,11 +18,12 @@ app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
 
 app.use(session({
-     secret : process.env.SECRET,
-     resave : true,
+     secret: process.env.SECRET,
+     resave: true,
      samesite: 'lax',
      saveUninitialized: false
 }))
+
 
 async function menuRetrieve(req) {
      try {
@@ -41,19 +42,13 @@ async function menuRetrieve(req) {
      }
 }
 
-async function getDate(name) {
-     const anchorDate = await new DatabaseController(process.env.DATABASE_URL).command('Select date FROM AnchorDates WHERE person = $1;', [name])
-     return DateTime.fromJSDate(anchorDate.rows[0].date, { zone: 'UTC' }) 
-}
 
 async function stuffyOfTheDay(stuffies) {
      let stevenStuffies = []
      let monicaStuffies = []
      var anchorDateSteven = await getDate("steven")
      var anchorDateMonica = await getDate("monica")
-     console.log(anchorDateMonica)
-     let currentDate = DateTime.local().setZone("America/Toronto")
-     currentDate = currentDate.setZone("UTC", { keepLocalTime: true })
+     let currentDate = getCurrentDate()
      for (num in stuffies.rows) {
           if (stuffies.rows[num].owner === "Monica") {
                monicaStuffies.push(stuffies.rows[num])
@@ -70,10 +65,21 @@ async function stuffyOfTheDay(stuffies) {
 }
 
 
+async function getDate(name) {
+     const anchorDate = await new DatabaseController(process.env.DATABASE_URL).command('Select date FROM AnchorDates WHERE person = $1;', [name])
+     return DateTime.fromJSDate(anchorDate.rows[0].date, { zone: 'UTC' })
+}
+
+function getCurrentDate() {
+     var currentDate = DateTime.local().setZone("America/Toronto")
+     currentDate = currentDate.setZone("UTC", { keepLocalTime: true })
+     return currentDate
+}
+
 
 async function manipulateDatabase(req, res, update) {
      if (await isInvalid(req)) {
-          return res.send({msg: 'Invalid Fields'})
+          return res.send({ msg: 'Invalid Fields' })
      }
 
      if (req.session.canEdit) {
@@ -81,47 +87,79 @@ async function manipulateDatabase(req, res, update) {
                const originalName = req.params.stuffyName.replace(/_/g, ' ')
                const originalType = req.params.stuffyType.replace(/_/g, ' ')
 
-               if ((originalName == req.body.name && originalType == req.body.animalType) || !(await alreadyExists(req.body.name, req.body.animalType))){
+               if ((originalName == req.body.name && originalType == req.body.animalType) || !(await alreadyExists(req.body.name, req.body.animalType))) {
                     var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
                     var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
-               } else{
-                    return res.send({msg: "Another stuffy of the same name already exists!"})
-               }    
+               } else {
+                    return res.send({ msg: "Another stuffy of the same name already exists!" })
+               }
           }
           else if (!(await alreadyExists(req.body.name, req.body.animalType))) {
+               const stuffies = await new DatabaseController(process.env.DATABASE_URL).menuResult()
+               let stevenStuffy, monicaStuffy
+               [stevenStuffy, monicaStuffy] = await stuffyOfTheDay(stuffies)
+               var stuffyName, stuffyType
+               
+               if (req.body.owner == "Steven") {
+                    stuffyName = stevenStuffy.name
+                    stuffyType = stevenStuffy.animal_type
+               } else if (req.body.owner == "Monica") {
+                    stuffyName = monicaStuffy.name
+                    stuffyType = monicaStuffy.animal_type
+               }
+
                var query = 'INSERT INTO stuffies (name, animal_type, image, owner, name_origin, origin, other_notes) VALUES ($1, $2, $3, $4, $5, $6, $7)'
                var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes]
           } else {
-               return res.send({msg: "This stuffy already exists!"})
-          }         
+               return res.send({ msg: "This stuffy already exists!" })
+          }
           await new DatabaseController(process.env.DATABASE_URL).command(query, values)
           const newUrl = "/" + req.body.name.replace(/ /g, '_') + '/' + req.body.animalType.replace(/ /g, '_') + "#active"
-          res.send({msg: 'Success', url: newUrl})
+          try{
+               await keepStuffyofTheDay(stuffyName, stuffyType, req.body.owner)
+          } catch (err){console.log(err)}
+          
+          res.send({ msg: 'Success', url: newUrl })
      }
      else {
-          res.send({msg: invalidPermissions})
+          res.send({ msg: invalidPermissions })
      }
 }
 
 
-async function alreadyExists(stuffyName, type){
+async function alreadyExists(stuffyName, type) {
      const existing = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type FROM stuffies')
      return (existing.rows.some(entry => (entry.name == stuffyName && entry.animal_type == type)))
 }
 
 
 async function isInvalid(req) {
-     
-     const errors = validationResult(req)
-     console.log(errors)
 
-     if(errors.isEmpty()){
+     const errors = validationResult(req)
+
+     if (errors.isEmpty()) {
           return false;
      }
      else {
           return true;
      }
 }
+
+async function keepStuffyofTheDay(sotdName, sotdType, owner) {
+     const stuffies = await new DatabaseController(process.env.DATABASE_URL).command("SELECT name, animal_type FROM stuffies WHERE owner = $1 ORDER BY name, animal_type ASC;", [owner])
+     const offset = stuffies.rows.findIndex(stuffy => (stuffy.name == sotdName && stuffy.animal_type == sotdType))
+
+     console.log(stuffies)
+     console.log(offset)
+
+
+     var today = getCurrentDate()
+     var anchor = today.minus({ days: offset })
+     anchor = anchor.toISODate()
+     console.log(anchor)
+     await new DatabaseController(process.env.DATABASE_URL).command("UPDATE anchordates SET date = $1 WHERE person = $2", [anchor, owner])
+}
+
 
 app.get('/', async (req, res) => {
      try {
@@ -167,13 +205,12 @@ app.post('/add-stuffy', [
           .trim()
           .not().isEmpty()
           .isURL(),
-], async(req, res) => {
+], async (req, res) => {
      await manipulateDatabase(req, res, false)
 })
 
 app.get("/:stuffyName/:stuffyType", async function (req, res) {
-     console.log(req.params.stuffyName)
-     console.log(req.params.stuffyType)
+
      var pageInfo = await menuRetrieve(req)
      var dbResult = await new DatabaseController(process.env.DATABASE_URL).command("SELECT * FROM stuffies WHERE name = $1 AND animal_type = $2", [req.params.stuffyName.replace(/_/g, ' '), req.params.stuffyType.replace(/_/g, ' ')])
      if (dbResult.rowCount > 0) {
@@ -200,7 +237,7 @@ app.post("/:stuffyName/:stuffyType", [
           .trim()
           .not().isEmpty()
           .isURL(),
-],async (req, res) => {
+], async (req, res) => {
      /*if (await isInvalid(req)) {
           return res.send({msg: 'Invalid Fields'})
      }
@@ -235,17 +272,17 @@ app.post("/login", [
      }
 })
 
-app.get("/logout", async (req, res) =>{
+app.get("/logout", async (req, res) => {
      req.session.canEdit = false
      res.redirect('/')
 })
 
 app.delete("/:stuffyName/:animalType", async (req, res) => {
-     if (req.session.canEdit){
+     if (req.session.canEdit) {
           const values = [req.params.stuffyName.replace(/_/g, ' '), req.params.animalType.replace(/_/g, ' ')]
-          await new DatabaseController(process.env.DATABASE_URL).command ("DELETE from stuffies where name = $1 AND animal_type = $2", values)
+          await new DatabaseController(process.env.DATABASE_URL).command("DELETE from stuffies where name = $1 AND animal_type = $2", values)
           res.send("Success")
-     } else{
+     } else {
           res.send(invalidPermissions)
      }
 })
