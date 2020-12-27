@@ -26,7 +26,7 @@ class DatabaseController {
           }
      }
      async menuResult(){
-          return this.command('Select name, animal_type,owner FROM stuffies ORDER BY name, animal_type ASC;')
+          return this.command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
      }
 }
 

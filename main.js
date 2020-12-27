@@ -26,7 +26,7 @@ app.use(session({
 
 async function menuRetrieve(req) {
      try {
-          var menuResult = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type, image, owner FROM stuffies ORDER BY name, animal_type ASC;')
+          var menuResult = await new DatabaseController(process.env.DATABASE_URL).menuResult()
           let stevenStuffy, monicaStuffy;
           [stevenStuffy, monicaStuffy] = await stuffyOfTheDay(menuResult);
           return {
@@ -63,6 +63,47 @@ async function stuffyOfTheDay(stuffies) {
      return [stevenStuffy, monicaStuffy]
 }
 
+
+
+async function manipulateDatabase(req, res, update) {
+     if (await isInvalid(req)) {
+          return res.send({msg: 'Invalid Fields'})
+     }
+
+     if (req.session.canEdit) {
+          if (update) {
+               const originalName = req.params.stuffyName.replace(/_/g, ' ')
+               const originalType = req.params.stuffyType.replace(/_/g, ' ')
+
+               if ((originalName == req.body.name && originalType == req.body.animalType) || !(await alreadyExists(req.body.name, req.body.animalType))){
+                    var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
+                    var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
+               } else{
+                    return res.send({msg: "Another stuffy of the same name already exists!"})
+               }    
+          }
+          else if (!(await alreadyExists(req.body.name, req.body.animalType))) {
+               var query = 'INSERT INTO stuffies (name, animal_type, image, owner, name_origin, origin, other_notes) VALUES ($1, $2, $3, $4, $5, $6, $7)'
+               var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes]
+          } else {
+               return res.send({msg: "This stuffy already exists!"})
+          }         
+          await new DatabaseController(process.env.DATABASE_URL).command(query, values)
+          const newUrl = "/" + req.body.name.replace(/ /g, '_') + '/' + req.body.animalType.replace(/ /g, '_') + "#active"
+          res.send({msg: 'Success', url: newUrl})
+     }
+     else {
+          res.send({msg: invalidPermissions})
+     }
+}
+
+
+async function alreadyExists(stuffyName, type){
+     const existing = await new DatabaseController(process.env.DATABASE_URL).command('Select name, animal_type FROM stuffies')
+     return (existing.rows.some(entry => (entry.name == stuffyName && entry.animal_type == type)))
+}
+
+
 async function isInvalid(req) {
      
      const errors = validationResult(req)
@@ -73,30 +114,6 @@ async function isInvalid(req) {
      }
      else {
           return true;
-     }
-}
-
-async function manipulateDatabase(req, res, update) {
-     if (await isInvalid(req)) {
-          return res.send({msg: 'Invalid Fields'})
-     }
-     if (req.session.canEdit) {
-          if (update) {
-               const originalName = req.params.stuffyName.replace(/_/g, ' ')
-               const originalType = req.params.stuffyType.replace(/_/g, ' ')
-               var query = 'Update stuffies Set name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
-               var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
-          }
-          else {
-               var query = 'INSERT INTO stuffies (name, animal_type, image, owner, name_origin, origin, other_notes) VALUES ($1, $2, $3, $4, $5, $6, $7)'
-               var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes]
-          }         
-          await new DatabaseController(process.env.DATABASE_URL).command(query, values)
-          const newUrl = "/" + req.body.name.replace(/ /g, '_') + '/' + req.body.animalType.replace(/ /g, '_') + "#active"
-          res.send({msg: 'Success', url: newUrl})
-     }
-     else {
-          res.send({msg: invalidPermissions})
      }
 }
 
