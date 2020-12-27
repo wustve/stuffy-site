@@ -41,11 +41,17 @@ async function menuRetrieve(req) {
      }
 }
 
+async function getDate(name) {
+     const anchorDate = await new DatabaseController(process.env.DATABASE_URL).command('Select date FROM AnchorDates WHERE person = $1;', [name])
+     return DateTime.fromJSDate(anchorDate.rows[0].date, { zone: 'UTC' }) 
+}
+
 async function stuffyOfTheDay(stuffies) {
      let stevenStuffies = []
      let monicaStuffies = []
-     const anchorDateSteven = DateTime.fromISO('2020-08-22', { zone: 'UTC' })
-     const anchorDateMonica = DateTime.fromISO('2020-08-12', { zone: 'UTC' })
+     var anchorDateSteven = await getDate("steven")
+     var anchorDateMonica = await getDate("monica")
+     console.log(anchorDateMonica)
      let currentDate = DateTime.local().setZone("America/Toronto")
      currentDate = currentDate.setZone("UTC", { keepLocalTime: true })
      for (num in stuffies.rows) {
