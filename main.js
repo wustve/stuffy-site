@@ -132,7 +132,6 @@ async function alreadyExists(stuffyName, type) {
      return (existing.rows.some(entry => (entry.name == stuffyName && entry.animal_type == type)))
 }
 
-
 async function isInvalid(req) {
 
      const errors = validationResult(req)
