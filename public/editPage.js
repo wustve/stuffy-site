@@ -39,14 +39,17 @@ function cancelEdit() {
 
 $(document).ready(function () {
      console.log("ready!")
+     var oldOwner = $("#paragraphs #owner").text()
      $("#edit").click(function () {
           $("#edit-form form").submit(function (event) {
                event.preventDefault();
                console.log("submit!")
+               var data = $('form').serializeArray()
+               data.push({name: "oldOwner", value: oldOwner})
                $.ajax({
                     url: $(location).attr('href'),
                     method: "POST",
-                    data: $('form').serialize(),
+                    data: $.param(data),
                     success: function (response) {
                          $('#status').text(response.msg)
                          if (response.msg == "Success") {
