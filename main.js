@@ -24,7 +24,7 @@ app.use(session({
      saveUninitialized: false
 }))
 
-new DatabaseController(process.env.DATABASE_URL).command("UPDATE anchordates SET date = '2020-12-27' WHERE person = 'Monica'")
+//new DatabaseController(process.env.DATABASE_URL).command("UPDATE anchordates SET date = '2020-12-27'")
 
 
 
@@ -96,12 +96,14 @@ async function manipulateDatabase(req, res, update) {
                const originalName = req.params.stuffyName.replace(/_/g, ' ')
                const originalType = req.params.stuffyType.replace(/_/g, ' ')
 
-               if ((originalName == req.body.name && originalType == req.body.animalType) || !(await alreadyExists(req.body.name, req.body.animalType))) {
-                    var sotD = await currentSotD(req.body.oldOwner)
-                    var query = 'UPDATE stuffies SET name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
-                    var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
+               if ((originalName == req.body.name && originalType == req.body.animalType) || !(await alreadyExists(req.body.name, req.body.animalType, stuffies))) {
+                    var owner = stuffies.find(stuffy => (stuffy.name == originalName && stuffy.animal_type == originalType)).owner
+                    var sotD = await currentSotD(owner, stuffies)
+                    var query = 'UPDATE stuffies SET name = $1, animal_type = $2, image = $3, name_origin = $4, origin = $5, other_notes = $6 WHERE name = $7 AND animal_type = $8'
+                    var values = [req.body.name, req.body.animalType, req.body.image, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
                     await new DatabaseController(process.env.DATABASE_URL).command(query, values)
-                    await keepStuffyofTheDayUpdate(sotD.name, sotD.animal_type, originalName, originalType, req.body.oldOwner, req.body.name, req.body.animalType, req.body.owner)
+
+                    await keepStuffyofTheDayUpdate(sotD.name, sotD.animal_type, originalName, originalType, owner, req.body.name, req.body.animalType)
                } else {
                     return res.send({ msg: "Another stuffy of the same name already exists!" })
                }
@@ -160,38 +162,17 @@ async function isInvalid(req) {
      }
 }
 
-function beforeAlpha(name1, name2, type1, type2) {
-     if (name1 < name2) {
-          return true
-     }
-     else if ((name1 === name2) && (type1 < type2)) {
-          return true
-     }
-}
 
-async function keepStuffyofTheDayUpdate(sotdName, sotdType, oldName, oldType, oldOwner, newName, newType, newOwner) {
-     if (newOwner !== "Steven" && newOwner !== "Monica") {
+async function keepStuffyofTheDayUpdate(sotdName, sotdType, oldName, oldType, owner, newName, newType) {
+     if (owner !== "Steven" && owner !== "Monica") {
           return
      }
      else {
           console.log("adjustment needed")
-          if (((oldName === sotdName) && (sotdType === oldType)) && (oldOwner === newOwner)) {
-               await keepStuffyofTheDay(newName, newType, newOwner)
-          }
-          else if (((oldName === sotdName) && (sotdType === oldType)) && (oldOwner !== newOwner)) {
-               await keepStuffyofTheDay(newName, )
-          }
-          else if ((oldName !== sotdName) && (oldOwner === newOwner)) {
-               await keepStuffyofTheDay(sotdName, sotdType, newOwner)
-          }
-          else if ((oldName !== sotdName) && (oldOwner !== newOwner)) {
-               if (newOwner === "Monica") {
-                    await keepStuffyofTheDay(sotdName, sotdType, newOwner)
-                    await keepStuffyofTheDay(sotdName, sotdType, newOwner)
-               }
-               else if (newOwner === "Steven") {
-                    
-               }
+          if (((oldName === sotdName) && (sotdType === oldType))){
+               await keepStuffyofTheDay(newName, newType, owner)
+          } else{
+               await keepStuffyofTheDay(sotdName, sotdType, owner)
           }
           /*const stuffies = await new DatabaseController(process.env.DATABASE_URL).command("SELECT name, animal_type FROM stuffies WHERE owner = $1 ORDER BY name, animal_type ASC;", [owner])
           if (beforeAlpha(oldName, currentName, oldType, currentType) && beforeAlpha(currentName, updateName, currentType, updateType)) {
@@ -200,7 +181,6 @@ async function keepStuffyofTheDayUpdate(sotdName, sotdType, oldName, oldType, ol
           else if (beforeAlpha(currentName, oldName, currentType, oldType) && beforeAlpha(updateName, currentName, updateType, currentType)) {
      
           }*/
-          await keepStuffyofTheDay(sotdName, sotdType, newOwner)
      }
 }
 
@@ -293,9 +273,6 @@ app.post("/:stuffyName/:stuffyType", [
           .trim()
           .not().isEmpty(),
      body('animalType')
-          .trim()
-          .not().isEmpty(),
-     body('owner')
           .trim()
           .not().isEmpty(),
      body('image')
