@@ -24,7 +24,7 @@ app.use(session({
      saveUninitialized: false
 }))
 
-//new DatabaseController(process.env.DATABASE_URL).command("UPDATE anchordates SET date = '2020-12-27'")
+//new DatabaseController(process.env.DATABASE_URL).command("UPDATE anchordates SET date = '2020-12-28' WHERE person = 'Steven'")
 
 
 
@@ -193,12 +193,12 @@ async function keepStuffyofTheDayUpdate(sotdName, sotdType, oldName, oldType, ow
      }
 }
 
-async function keepStuffyofTheDay(sotdName, sotdType, owner, additionalOffset = 0) {
+async function keepStuffyofTheDay(sotdName, sotdType, owner) {
      if (owner !== "Steven" && owner !== "Monica") {
           return
      }
      const stuffies = await new DatabaseController(process.env.DATABASE_URL).command("SELECT name, animal_type FROM stuffies WHERE owner = $1 ORDER BY name, animal_type ASC;", [owner])
-     const offset = stuffies.rows.findIndex(stuffy => (stuffy.name == sotdName && stuffy.animal_type == sotdType)) + additionalOffset
+     const offset = stuffies.rows.findIndex(stuffy => (stuffy.name == sotdName && stuffy.animal_type == sotdType))
 
      console.log(stuffies)
      console.log (sotdName)
@@ -324,12 +324,11 @@ app.delete("/:stuffyName/:animalType", async (req, res) => {
           const owner = stuffies.find(stuffy => (stuffy.name == name && stuffy.animal_type == type)).owner
           const sotD = await currentSotD(owner, stuffies)
           console.log(sotD)
-
-          await new DatabaseController(process.env.DATABASE_URL).command("DELETE from stuffies where name = $1 AND animal_type = $2", values)
-          
           if (sotD.name == name && sotD.animal_type == type){
-               await keepStuffyofTheDay(sotD.name, sotD.animal_type, owner, 1)
-          } else {
+               await keepStuffyofTheDay(sotD.name, sotD.animal_type, owner)
+          }
+          await new DatabaseController(process.env.DATABASE_URL).command("DELETE from stuffies where name = $1 AND animal_type = $2", values)
+          if (sotD.name !== name || sotD.animal_type !== type){
                await keepStuffyofTheDay(sotD.name, sotD.animal_type, owner)
           }
 
