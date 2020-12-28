@@ -58,6 +58,10 @@ async function stuffyOfTheDay(stuffies) {
      }
      let dateDifferenceSteven = Math.floor((currentDate - anchorDateSteven) / (1000 * 60 * 60 * 24)) % stevenStuffies.length
      let dateDifferenceMonica = Math.floor((currentDate - anchorDateMonica) / (1000 * 60 * 60 * 24)) % monicaStuffies.length
+     console.log(anchorDateMonica)
+     console.log(monicaStuffies.length)
+     console.log(dateDifferenceMonica)
+     console.log(monicaStuffies)
      let stevenStuffy = stevenStuffies[dateDifferenceSteven]
      let monicaStuffy = monicaStuffies[dateDifferenceMonica]
      return [stevenStuffy, monicaStuffy]
@@ -75,6 +79,22 @@ function getCurrentDate() {
      return currentDate
 }
 
+async function getCurrentStuffy(req) {
+     const stuffies = await new DatabaseController(process.env.DATABASE_URL).menuResult()
+     let stevenStuffy, monicaStuffy
+     [stevenStuffy, monicaStuffy] = await stuffyOfTheDay(stuffies)
+     var stuffyName, stuffyType
+     if (req.body.owner == "Steven") {
+          stuffyName = stevenStuffy.name
+          stuffyType = stevenStuffy.animal_type
+     }
+     else if (req.body.owner == "Monica") {
+          stuffyName = monicaStuffy.name
+          stuffyType = monicaStuffy.animal_type
+     }
+     return [stuffyName, stuffyType]
+}
+
 
 async function manipulateDatabase(req, res, update) {
      if (await isInvalid(req)) {
@@ -88,26 +108,19 @@ async function manipulateDatabase(req, res, update) {
                const originalType = req.params.stuffyType.replace(/_/g, ' ')
 
                if ((originalName == req.body.name && originalType == req.body.animalType) || !(await alreadyExists(req.body.name, req.body.animalType))) {
+                    let stuffyName, stuffyType
+                    [stuffyName, stuffyType] = await getCurrentStuffy(req)
                     var query = 'UPDATE stuffies SET name = $1, animal_type = $2, image = $3, owner = $4, name_origin = $5, origin = $6, other_notes = $7 WHERE name = $8 AND animal_type = $9'
                     var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes, originalName, originalType]
                     await new DatabaseController(process.env.DATABASE_URL).command(query, values)
+                    await keepStuffyofTheDayUpdate(stuffyName, stuffyType, originalName, originalType, req.body.name, req.body.animalType, req.body.owner)
                } else {
                     return res.send({ msg: "Another stuffy of the same name already exists!" })
                }
           }
           else if (!(await alreadyExists(req.body.name, req.body.animalType))) {
-               const stuffies = await new DatabaseController(process.env.DATABASE_URL).menuResult()
-               let stevenStuffy, monicaStuffy
-               [stevenStuffy, monicaStuffy] = await stuffyOfTheDay(stuffies)
-               var stuffyName, stuffyType
-               
-               if (req.body.owner == "Steven") {
-                    stuffyName = stevenStuffy.name
-                    stuffyType = stevenStuffy.animal_type
-               } else if (req.body.owner == "Monica") {
-                    stuffyName = monicaStuffy.name
-                    stuffyType = monicaStuffy.animal_type
-               }
+               let stuffyName, stuffyType
+               [stuffyName, stuffyType] = await getCurrentStuffy(req)
                
                var query = 'INSERT INTO stuffies (name, animal_type, image, owner, name_origin, origin, other_notes) VALUES ($1, $2, $3, $4, $5, $6, $7)'
                var values = [req.body.name, req.body.animalType, req.body.image, req.body.owner, req.body.nameOrigin, req.body.origin, req.body.otherNotes]
@@ -141,6 +154,36 @@ async function isInvalid(req) {
      }
      else {
           return true;
+     }
+}
+
+function beforeAlpha(name1, name2, type1, type2) {
+     if (name1 < name2) {
+          return true
+     }
+     if ((name1 === name2) && (type1 < type2)) {
+          return true
+     }
+}
+
+async function keepStuffyofTheDayUpdate(currentName, currentType, oldName, oldType, updateName, updateType, owner) {
+     if (owner !== "Steven" && owner !== "Monica"){
+          return
+     }
+     if (beforeAlpha(oldName, currentName, oldType, currentType) && beforeAlpha(updateName, currentName, updateType, currentType)) {
+          return
+     }
+     else if (beforeAlpha(currentName, oldName, currentType, oldType) && beforeAlpha(currentName, updateName, currentType, updateType)) {
+          return
+     }
+     else {
+          const stuffies = await new DatabaseController(process.env.DATABASE_URL).command("SELECT name, animal_type FROM stuffies WHERE owner = $1 ORDER BY name, animal_type ASC;", [owner])
+          if (beforeAlpha(oldName, currentName, oldType, currentType) && beforeAlpha(currentName, updateName, currentType, updateType)) {
+
+          }
+          else if (beforeAlpha(currentName, oldName, currentType, oldType) && beforeAlpha(updateName, currentName, updateType, currentType)) {
+     
+          }
      }
 }
 
