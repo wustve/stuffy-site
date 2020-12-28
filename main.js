@@ -50,8 +50,7 @@ async function menuRetrieve(req) {
 async function stuffyOfTheDay(stuffies) {
      let stevenStuffies = []
      let monicaStuffies = []
-     var anchorDateSteven = await getDate("Steven")
-     var anchorDateMonica = await getDate("Monica")
+     var [anchorDateMonica, anchorDateSteven] = await getDate()
      let currentDate = getCurrentDate()
      for (num in stuffies) {
           if (stuffies[num].owner === "Monica") {
@@ -72,10 +71,22 @@ async function stuffyOfTheDay(stuffies) {
      return [stevenStuffy, monicaStuffy]
 }
 
+async function findJSON(name, list) {
+     for (var i = 0; i < list.length; i++) {
+          if (list[i].person === name) {
+               return list[i]
+          }
+     }
+}
 
-async function getDate(name) {
-     const anchorDate = await new DatabaseController(process.env.DATABASE_URL).command('Select date FROM AnchorDates WHERE person = $1;', [name])
-     return DateTime.fromJSDate(anchorDate.rows[0].date, { zone: 'UTC' })
+async function getDate() {
+     var anchorDates = await new DatabaseController(process.env.DATABASE_URL).command('Select person, date FROM AnchorDates;')
+     anchorDates = anchorDates.rows
+     var monica = await findJSON("Monica", anchorDates)
+     var steven = await findJSON("Steven", anchorDates)
+     monica = DateTime.fromJSDate(monica.date, { zone: 'UTC' })
+     steven = DateTime.fromJSDate(steven.date, { zone: 'UTC' })
+     return [monica, steven]
 }
 
 function getCurrentDate() {
@@ -119,7 +130,6 @@ async function manipulateDatabase(req, res, update) {
                return res.send({ msg: "This stuffy already exists!" })
           }
 
-
           const newUrl = "/" + req.body.name.replace(/ /g, '_') + '/' + req.body.animalType.replace(/ /g, '_') + "#active"
           res.send({ msg: 'Success', url: newUrl })
      }
@@ -143,7 +153,6 @@ async function currentSotD(owner, stuffies) {
      }
      return {name: stuffyName, animal_type: stuffyType}
 }
-
 
 
 async function alreadyExists(stuffyName, type, existing) {
