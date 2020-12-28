@@ -315,17 +315,19 @@ app.get("/logout", async (req, res) => {
 
 app.delete("/:stuffyName/:animalType", async (req, res) => {
      if (req.session.canEdit) {
-          const values = [req.params.stuffyName.replace(/_/g, ' '), req.params.animalType.replace(/_/g, ' ')]
+          const name = req.params.stuffyName.replace(/_/g, ' ')
+          const type = req.params.animalType.replace(/_/g, ' ')
+          const values = [name,type]
           
           var stuffies = await new DatabaseController(process.env.DATABASE_URL).menuResult()
           stuffies = stuffies.rows
-          const owner = stuffies.find(stuffy => (stuffy.name == req.params.stuffyName && stuffy.animal_type == req.params.animalType)).owner
+          const owner = stuffies.find(stuffy => (stuffy.name == name && stuffy.animal_type == type)).owner
           const sotD = await currentSotD(owner, stuffies)
           console.log(sotD)
 
           await new DatabaseController(process.env.DATABASE_URL).command("DELETE from stuffies where name = $1 AND animal_type = $2", values)
           
-          if (sotD.name == req.params.stuffyName && sotD.animal_type == req.params.animalType){
+          if (sotD.name == name && sotD.animal_type == type){
                await keepStuffyofTheDay(sotD.name, sotD.animal_type, owner, 1)
           } else {
                await keepStuffyofTheDay(sotD.name, sotD.animal_type, owner)
