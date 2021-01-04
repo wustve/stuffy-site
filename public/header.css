@@ -11,6 +11,13 @@
      border-width: 0.2vw;
      box-sizing: border-box;
 }
+
+#login-housing{
+     flex:1;
+     padding-right: 2vh;
+     display: flex;
+}
+
 #header a{
      background-color: inherit;
      color: var(--text-colour);
@@ -25,14 +32,13 @@
      background-color: var(--hover-colour) ;
 }
 
-#toggle-housing,#toggle-housing-hidden {
+
+#toggle-housing{
      flex:1;
      padding: 1vh;
-     width: 10vh;
-     height: 5vh;
 }
 
-.toggle,.toggle-hidden {
+.toggle {
      cursor: pointer;
      position: absolute;
      width: 10vh;

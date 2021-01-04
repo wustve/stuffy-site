@@ -5,8 +5,10 @@ body {
 }
 
 h1 {
+     display: inline-block;
      font-size: 3em;
      margin-bottom: 5px;
+     padding-right: 20px;
      font-family: 'Merriweather', serif;
 }
 
@@ -16,9 +18,36 @@ h2 {
      font-family: 'Merriweather', serif;
 }
 
+#edit {
+     display: inline-block;
+     background-color: var(--main-bg-colour);
+     padding:0;
+     color: var(--edit-button);
+     border:none;
+}
+
+#edit:hover{
+     background-color: var(--hover-colour);
+}
+
 p {
      font-size: 1.2em;
 }
+
+form {
+     margin: 10px;
+}
+
+input , form button{
+     display: block;
+     margin: 5px;
+     margin-left: 0px;
+     width: 30%;
+     color: var(--text-colour);
+     background-color: var(--main-bg-colour);
+     border-color: var(--border-colour);
+}
+
 
 .title {
      border-bottom-color: var(--border-colour);
@@ -26,14 +55,23 @@ p {
      border-bottom-style: solid;
 }
 
-#image {
-     margin-top: 1%;
+textarea {
+     display: block;
+     margin: 5px;
+     margin-left: 0px;
+     width: 70%;
+     height: 20%;
+     color: var(--text-colour);
+     background-color: var(--main-bg-colour);
+     border-color: var(--border-colour)
 }
 
-.basic-info {
-     background-color: var(--element-colour);
-     padding: 1%;
-     margin-left: 2%
+.hidden {
+     display: none !important;
+}
+
+#image-div {
+     margin-top: 1%;
 }
 
 #info-wrapper {
@@ -62,4 +100,17 @@ p {
      border-color: rgb(119, 119, 119);
 }
 
+#submit , form button{
+     width: auto;
+}
 
+#form-disclaimer {
+     margin-left: 10px;
+     font-size: 0.75em;
+}
+
+
+.required:after {
+     content:" *";
+     color: red;
+   }

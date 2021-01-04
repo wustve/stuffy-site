@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html colour-mode = "dark">
-     <script src = "../retrieveColourMode.js"></script> 
+     
      <head>
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script src = "../retrieveColourMode.js"></script> 
+          <script src = "../editPage.js"></script> 
           <link rel = 'stylesheet' type = 'text/css' href = '/hideFOUC.css'>
           <title>Stuffy Site: <%=selectedStuffy.name%></title>
           <link rel = "stylesheet" type = "text/css" href = "../article.css">
           <link rel = "stylesheet" type = "text/css" href = "../colourmode.css">
           <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&display=swap" rel="stylesheet">
           <link href="https://fonts.googleapis.com/css2?family=Assistant&display=swap" rel="stylesheet"> 
+          
      </head>
      <body onload = "setCheckboxColourMode()">
           <%- include ("partials/menu.ejs")%> <!--Put the menu first as otherwise the jump to active doesnt always work?-->
           <%- include ("partials/header.ejs")%>
           <div id = "content-wrapper">
-               <div class = "title">
+               <template id = "edit-form-temp">
+                    <%- include ("partials/stuffy_form.ejs")%>
+               </template>
+               <div class = "title" id = "main-title">
                     <h1><%=selectedStuffy.name%></h1>
+                    <button onclick = "editPage()" id = 'edit'>[ Edit ]</button>
                </div>
                <div id = "info-wrapper">
-                    <div id ="image">
+                    <div id ="image-div">
                          <img src="<%=selectedStuffy.image%>" class = "thumbnail">
                     </div>
                     <!--div class = "basic-info">
@@ -28,28 +36,28 @@
                          <div class = "title">
                               <h2>Owner</h2>
                          </div>
-                         <p><%=selectedStuffy.owner%></p>
+                         <p id = "owner"><%=selectedStuffy.owner%></p>
                          <div class = "title">
                               <h2>Animal Type</h2>
                          </div>
-                         <p><%=selectedStuffy.animal_type%></p>
-                         <% if (selectedStuffy.name_origin !== null) {%>
+                         <p id = "animalType"><%=selectedStuffy.animal_type%></p>
+                         <% if (selectedStuffy.name_origin !== null && selectedStuffy.name_origin !== "") {%>
                               <div class = "title">
                                    <h2>Name Origin</h2>
                               </div>
-                              <p><%=selectedStuffy.name_origin%></p>
+                              <p id = "nameOrigin"><%=selectedStuffy.name_origin%></p>
                          <% }%>
-                         <% if (selectedStuffy.origin !== null) {%>
+                         <% if (selectedStuffy.origin !== null && selectedStuffy.origin !== "") {%>
                               <div class = "title">
                                    <h2>Origin</h2>
                               </div>
-                              <p><%=selectedStuffy.origin%></p>
+                              <p id = "origin"><%=selectedStuffy.origin%></p>
                          <% }%>
-                         <% if (selectedStuffy.other_notes !== null) {%>
+                         <% if (selectedStuffy.other_notes !== null && selectedStuffy.other_notes !== "") {%>
                               <div class = "title">
                                    <h2>Other Notes</h2>
                               </div>
-                              <p><%=selectedStuffy.other_notes%></p>
+                              <p id = "otherNotes"><%=selectedStuffy.other_notes%></p>
                          <% }%>
                     </div>
                </div>
